@@ -46,6 +46,11 @@ class AcceptanceModuleController extends Controller
             'blockedForManifesting' => ''
         ]);
 
+        if (floatval($data['weight']) == floatval(0)) {
+            $request->flash('alert-danger', 'Incorrect weight scale readings..');
+            return back();
+        }
+
         // dd($data);
 
         error_reporting(E_ALL);

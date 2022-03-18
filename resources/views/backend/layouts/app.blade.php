@@ -22,6 +22,7 @@
     <!-- icons -->
     <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="/assets/css/override.css">
+    @yield('links')
 
 </head>
 
@@ -214,6 +215,7 @@
 
     <!-- App js -->
     <script src="/assets/js/app.min.js"></script>
+    @yield('scripts')
 
 </body>
 

@@ -3,6 +3,20 @@
 @section('name')
     Acceptance
 @endsection
+@section('links')
+    @livewireStyles()
+    <style>
+        .bbtt {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+    </style>
+@endsection
+@section('scripts')
+    @livewireScripts()
+@endsection
 
 @section('content')
     <div class="row">
@@ -12,10 +26,14 @@
                     method="post">
                     @csrf
                     <div class="row">
+                        <div class="row">
+                            @livewire('weight-reading')
+                        </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label class="form-label">stationCode <span class="span-red">*</span></label>
-                                <input type="text" readonly class="form-control flatpickr-input" value="{{ $code }}">
+                                <input type="text" readonly class="form-control flatpickr-input"
+                                    value="{{ $code }}">
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -66,13 +84,7 @@
                         <div class="col-md-12">
                             <p class="sub-header">parts</p>
                         </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label class="form-label">weight(KG) <span class="span-red">*</span></label>
-                                <input required type="text" name="weight" class="form-control flatpickr-input"
-                                    placeholder="weight">
-                            </div>
-                        </div>
+
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label class="form-label">volume(MC)</label>
