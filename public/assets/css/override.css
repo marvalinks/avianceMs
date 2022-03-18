@@ -1,0 +1,16 @@
+.ml-2 {
+    margin-left: 5px;
+}
+.mtop-30 {
+    margin-top: 30px;
+}
+.span-red {
+    color: rgb(187, 7, 7);
+}
+.submit-btn {
+    width: 100%;
+}
+.accform input,
+.accform select {
+    text-transform: uppercase !important;
+}
