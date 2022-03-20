@@ -5,6 +5,7 @@
 @endsection
 @section('links')
     @livewireStyles()
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
         .bbtt {
             display: flex;
@@ -12,9 +13,19 @@
             align-items: center;
         }
 
+        .select2-container .select2-selection--single {
+            height: calc(1.5em + 0.9rem + 2px) !important;
+        }
+
     </style>
 @endsection
 @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
+        });
+    </script>
     @livewireScripts()
 @endsection
 
@@ -42,8 +53,13 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label class="form-label">prefix <span class="span-red">*</span></label>
-                                <input required type="text" name="prefix" class="form-control flatpickr-input"
-                                    placeholder="prefix">
+                                <select class="form-control js-example-basic-multiple" name="prefix">
+                                    <option value="">-choose-</option>
+                                    @foreach ($airlines as $airline)
+                                        <option value="{{ $airline->prefix }}">
+                                            [{{ $airline->prefix }}] {{ $airline->airline }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -56,7 +72,7 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label class="form-label">originCode <span class="span-red">*</span></label>
-                                <input required type="text" name="originCode" class="form-control flatpickr-input"
+                                <input required type="text" readonly name="originCode" class="form-control flatpickr-input"
                                     placeholder="originCode" value="{{ $code }}">
                             </div>
                         </div>
@@ -94,8 +110,13 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label class="form-label">specialHandlingCodes</label>
-                                <input type="text" name="specialHandlingCodes" class="form-control flatpickr-input"
-                                    placeholder="specialHandlingCodes">
+                                <select class="form-control js-example-basic-multiple" name="specialHandlingCodes[]"
+                                    multiple="multiple">
+                                    @foreach ($handling_codes as $handling_code)
+                                        <option value="{{ $handling_code->code }}">
+                                            {{ $handling_code->code }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-4">

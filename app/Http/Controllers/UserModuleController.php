@@ -37,7 +37,7 @@ class UserModuleController extends Controller
         unset($data['role']);
 
         User::create($data);
-        $request->flash('alert-success', 'User Successfully created');
+        $request->session()->flash('alert-success', 'User Successfully created');
         return back();
     }
     public function edit(Request $request, $id)
@@ -67,7 +67,7 @@ class UserModuleController extends Controller
         unset($data['role']);
 
         $user->update($data);
-        $request->flash('alert-success', 'User Successfully updated');
+        $request->session()->flash('alert-success', 'User Successfully updated');
         return redirect()->route('backend.users.list');
     }
 }

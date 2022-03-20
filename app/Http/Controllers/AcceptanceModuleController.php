@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\AcceptancePool;
+use App\Models\Airline;
+use App\Models\HandlingCode;
 use Illuminate\Http\Client\Pool;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -27,7 +29,9 @@ class AcceptanceModuleController extends Controller
     public function create(Request $request)
     {
         $code = $this->stationCode;
-        return view('backend.pages.acceptance.forms', compact('code'));
+        $handling_codes = HandlingCode::latest()->get();
+        $airlines = Airline::latest()->get();
+        return view('backend.pages.acceptance.forms', compact('code', 'handling_codes', 'airlines'));
     }
 
     public function edit(Request $request, $id)
@@ -47,7 +51,7 @@ class AcceptanceModuleController extends Controller
         ]);
 
         if (floatval($data['weight']) == floatval(0)) {
-            $request->flash('alert-danger', 'Incorrect weight scale readings..');
+            $request->session()->flash('alert-danger', 'Incorrect weight scale readings..');
             return back();
         }
 
@@ -84,7 +88,7 @@ class AcceptanceModuleController extends Controller
                     "amount" => intval($data['volume']) ?? 0,
                     "unit" => "MC"
                 ],
-                // "specialHandlingCodes" => $specialHandlingCodes,
+                "specialHandlingCodes" => $data['specialHandlingCodes'] ?? [],
                 "securityStatus" => $data['securityStatus'],
                 "x-ray" => $data['x-ray'] ?? null,
                 "remarks" => $data['remarks'] ?? null,
@@ -96,8 +100,8 @@ class AcceptanceModuleController extends Controller
 
         $bb = array(
             "airWaybill" => [
-                "prefix" => intval($data['prefix']),
-                "serial" => intval($data['serial']),
+                "prefix" => $data['prefix'],
+                "serial" => $data['serial'],
                 "originCode" => $this->stationCode,
                 "destinationCode" => $data['destinationCode'],
                 "pieces" => intval($data['pieces']),
@@ -105,7 +109,7 @@ class AcceptanceModuleController extends Controller
                     "amount" => intval($data['weight']),
                     "unit" => "KG"
                 ],
-                "natureOfGoods" => "CONSOL"
+                "natureOfGoods" => $data['natureOfGoods'] ?? null
             ],
             "part" => [
                 "pieces" => intval($data['pieces']),
@@ -117,11 +121,11 @@ class AcceptanceModuleController extends Controller
                     "amount" => intval($data['volume']),
                     "unit" => "MC"
                 ],
-                "specialHandlingCodes" => [],
-                "securityStatus" => "Secure",
-                "x-ray" => true,
+                "specialHandlingCodes" => $data['specialHandlingCodes'],
+                "securityStatus" => $data['securityStatus'],
+                "x-ray" => intval($data['x-ray']) == 1 ? true : false,
                 "remarks" => $data['remarks'],
-                "blockedForManifesting" => false
+                "blockedForManifesting" => intval($data['blockedForManifesting']) == 1 ? true : false
             ]
         );
 
@@ -141,8 +145,8 @@ class AcceptanceModuleController extends Controller
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => json_encode($bb),
             CURLOPT_HTTPHEADER => [
-                'Apikey: RoPgFWG3Pv2ymLF19VyHuGVfUnluDo3x',
-                'Stationcode: ACC',
+                'Apikey: ' . $this->cargoKey,
+                'Stationcode: ' . $this->stationCode,
                 "content-type: application/json",
                 "cache-control: no-cache"
             ],
@@ -161,13 +165,13 @@ class AcceptanceModuleController extends Controller
 
 
         if ($httpcode == 422) {
-            $request->flash('alert-danger', 'Global error processing request');
+            $request->session()->flash('alert-danger', 'Global error processing request');
         }
         if ($httpcode == 201) {
             $this->getAirwayBill($airwayBill, true);
         }
 
-        $request->flash('alert-success', 'Acceptance form data successfully processed');
+        $request->session()->flash('alert-success', 'Acceptance form data successfully processed');
         return redirect()->route('backend.acceptance.list');
 
         $tranx = json_decode($response, true);

@@ -23,7 +23,7 @@ class AuthenticationController extends Controller
             $request->session()->regenerate();
             return redirect()->route('backend.dashboard');
         }
-        $request->flash('alert-danger', 'Error logging in');
+        $request->session()->flash('alert-danger', 'Error logging in');
         return redirect()->route('login');
     }
 

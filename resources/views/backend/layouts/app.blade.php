@@ -153,6 +153,14 @@
             <div class="content">
 
                 <div class="container-fluid">
+                    @foreach (['alert-danger', 'alert-warning', 'alert-success', 'alert-info'] as $msg)
+                        @if (Session::has($msg))
+                            <div class="alert {{ $msg }} alert-dismissible fade show" role="alert">
+                                {{ Session::get($msg) }}
+
+                            </div>
+                        @endif
+                    @endforeach
 
                     <div class="row">
                         <div class="col-12">
