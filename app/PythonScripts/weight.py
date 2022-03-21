@@ -46,12 +46,14 @@ class WeightScale:
         self.port_value = ""
         port_list = []
 
+        for sel_port in ports:
+            port_list.append(str(sel_port))
+
         if(len(port_list) < 1):
             print('No ports opened or available!')
             return
 
-        for sel_port in ports:
-            port_list.append(str(sel_port))
+        # print(port_list)
 
         for x in range(0, len(port_list)):
             if port_list[x].startswith(port_number):

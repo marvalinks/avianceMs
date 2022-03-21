@@ -22,10 +22,11 @@ class WeightReading extends Component
         if ($this->comport == '') {
             return false;
         }
+        // dd($this->comport);
         $path = app_path('PythonScripts');
         $service = new LaravelPython();
         $result = $service->run($path . '/weight.py', [$this->comport]);
+        dd($result);
         $this->weight = $result;
-        // dd($result);
     }
 }
