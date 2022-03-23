@@ -73,8 +73,8 @@ class WeightScale:
         self.ids.weight.text = packet.decode("utf").rstrip("\n")
 
 
-ws = WeightScale(sys.argv[1])
-ws.read_weight()
+# ws = WeightScale(sys.argv[1])
+# ws.read_weight()
 
 # def read_weight():
 #     # print('Hello, my name is', self.port_number)
@@ -82,3 +82,16 @@ ws.read_weight()
 
 
 # read_weight()
+
+
+def w2():
+    serialBout = serial.Serial()
+    serialBout.port = "COM3"
+    serialBout.open()
+
+    packet = serialBout.readline()
+    wtt = packet.decode("utf").rstrip("\n")
+    print(wtt)
+
+
+w2()

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AcceptanceApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+Route::group(['prefix' => 'v1', 'middleware' => []], function () {
+    Route::post('login', [UserApiController::class, 'loginUser']);
+    Route::post('submit-weight', [AcceptanceApiController::class, 'postWeight']);
+    Route::get('requirements', [AcceptanceApiController::class, 'getRequirements']);
 });
