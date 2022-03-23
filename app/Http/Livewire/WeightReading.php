@@ -11,6 +11,12 @@ class WeightReading extends Component
 {
     public $comport = "COM";
     public $weight;
+
+    public function mount()
+    {
+        $this->testPythonScript();
+    }
+
     public function render()
     {
         return view('livewire.weight-reading');
@@ -18,15 +24,14 @@ class WeightReading extends Component
 
     public function testPythonScript()
     {
-
-        if ($this->comport == '') {
-            return false;
-        }
-        // dd($this->comport);
         $path = app_path('PythonScripts');
-        $service = new LaravelPython();
-        $result = $service->run($path . '/weight.py', [$this->comport]);
-        dd($result);
+        // dd($path . '/weight.py');
+        // $service = new LaravelPython();
+        // $result = $service->run($path . '/weight.py');
+        // $result = \Python::run($path . '/weight.py');
+        $result = shell_exec("python ". $path . "/weight.py" ." 2>&1");
+        
+        // dd($result);
         $this->weight = $result;
     }
 }

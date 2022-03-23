@@ -5,7 +5,7 @@ import sys
 
 def w2():
     serialBout = serial.Serial()
-    serialBout.port = "COM3"
+    serialBout.port = "COM5"
     serialBout.open()
 
     packet = serialBout.readline()
