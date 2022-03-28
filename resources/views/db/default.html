@@ -1,0 +1,135 @@
+-- -------------------------------------------------------------
+-- TablePlus 4.5.2(402)
+--
+-- https://tableplus.com/
+--
+-- Database: aviancems
+-- Generation Time: 2022-03-28 13:17:23.6700
+-- -------------------------------------------------------------
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+INSERT INTO `airlines` (`id`, `airline`, `iata_code`, `prefix`, `created_at`, `updated_at`) VALUES
+(1, 'Delta Air Lines', 'DL', '6', NULL, NULL),
+(2, 'Emirate Sky Cargo', 'EK', '176', NULL, NULL),
+(3, 'Ethiopian Airlines', 'ET', '71', NULL, NULL),
+(4, 'ASKY', 'KP', '32', NULL, NULL),
+(5, 'Middle Eastern Airlines', 'ME', '76', NULL, NULL),
+(6, 'Egypt Air', 'MS', '77', NULL, NULL),
+(7, 'TAP Air Portugal', 'TP', '47', NULL, NULL);
+
+INSERT INTO `handling_codes` (`id`, `code`, `description`, `created_at`, `updated_at`) VALUES
+(1, 'ACT', 'Active Temperature Controlled System', NULL, NULL),
+(2, 'AOG', 'Aircraft on Ground', NULL, NULL),
+(3, 'ATT', 'Goods Attached to Air Waybill', NULL, NULL),
+(4, 'AVI', 'Live Animal', NULL, NULL),
+(5, 'BIG', 'Outsized', NULL, NULL),
+(6, 'BUP', 'Bulk Unitization Programme, Shipper/Consignee Handled Unit', NULL, NULL),
+(7, 'CAO', 'Cargo Aircraft Only', NULL, NULL),
+(8, 'CAT', 'Cargo Attendant Accompanying Shipment', NULL, NULL),
+(9, 'COL', 'Cool Goods', NULL, NULL),
+(10, 'COM', 'Company Mail', NULL, NULL),
+(11, 'CRT', 'Control Room Temperature +15C to +25C', NULL, NULL),
+(12, 'DIP', 'Diplomatic Mail', NULL, NULL),
+(13, 'EAP', 'E-freight Consignment with Accompanying Paper Documents', NULL, NULL),
+(14, 'EAT', 'Foodstuffs', NULL, NULL),
+(15, 'EAW', 'E-freight Consignment with No Accompanying Paper Documents', NULL, NULL),
+(16, 'ECC', 'Shpmnt with electroniclly concluded cgo contract with no accompanyng paper AWB', NULL, NULL),
+(17, 'ELI', 'Lithium Ion Batteries otherwise expectred from the IATA DGR', NULL, NULL),
+(18, 'ELM', 'Lithium Metal Batteries otherwise excepted from the IATA DGR', NULL, NULL),
+(19, 'FIL', 'Undeveloped/Unexposed Film', NULL, NULL),
+(20, 'FRI', 'Frozen Goods Subject to Veterinary/Phytosanitary Inspections', NULL, NULL),
+(21, 'FRO', 'Frozen Goods', NULL, NULL),
+(22, 'GOG', 'Hanging Garments', NULL, NULL),
+(23, 'HEA', 'Heavy Cargo/150 kilograms and over per piece', NULL, NULL),
+(24, 'HEG', 'Hatching Eggs', NULL, NULL),
+(25, 'HUM', 'Human Remains in Coffin', NULL, NULL),
+(26, 'ICE', 'Dry Ice', NULL, NULL),
+(27, 'LHO', 'Living Human Organs/Blood', NULL, NULL),
+(28, 'LIC', 'License Required', NULL, NULL),
+(29, 'MAG', 'Magnetized Material', NULL, NULL),
+(30, 'MAL', 'Mail', NULL, NULL),
+(31, 'MUW', 'Munitions of War', NULL, NULL),
+(32, 'NSC', 'Cargo Not Secured yet for PAX or All Cargo Aircraft', NULL, NULL),
+(33, 'NWP', 'Newspapers, Magazines', NULL, NULL),
+(34, 'OBX', 'Obnoxious Cargo', NULL, NULL),
+(35, 'OHG', 'Overhang Item', NULL, NULL),
+(36, 'PAC', 'Passenger and Cargo', NULL, NULL),
+(37, 'PEA', 'Hunting Trophies, Skins, Hide and Articles of Species', NULL, NULL),
+(38, 'PEF', 'Flowers', NULL, NULL),
+(39, 'PEM', 'Meat', NULL, NULL),
+(40, 'PEP', 'Fruits and Vegetables', NULL, NULL),
+(41, 'PER', 'Perishable Cargo', NULL, NULL),
+(42, 'PES', 'Fish/Seafood', NULL, NULL),
+(43, 'PIL', 'Pharmaceuticals', NULL, NULL),
+(44, 'QRT', 'Quick Ramp Transfer', NULL, NULL),
+(45, 'RAC', 'Reserved Air Cargo', NULL, NULL),
+(46, 'RCL', 'Cryogenic Liquids', NULL, NULL),
+(47, 'RCM', 'Corrosive', NULL, NULL),
+(48, 'RCX', 'Explosives 1.3C', NULL, NULL),
+(49, 'RDS', 'Diagnostic Specimens', NULL, NULL),
+(50, 'REQ', 'Excepted Quantities of Dangerous Goods', NULL, NULL),
+(51, 'REX', 'To be reserved for normally forbidden Explosives, Divisions 1.1, 1.2, 1.3, 1.4F,1.5 and 1.6', NULL, NULL),
+(52, 'RFG', 'Flammable Gas', NULL, NULL),
+(53, 'RFL', 'Flammable Liquid', NULL, NULL),
+(54, 'RFS', 'Flammable Solid', NULL, NULL),
+(55, 'RFW', 'Dangerous When Wet', NULL, NULL),
+(56, 'RGX', 'Explosives 1.3G', NULL, NULL),
+(57, 'RIS', 'Infectious Substance', NULL, NULL),
+(58, 'RLI', 'Fully regulated Lithium ION Batteries', NULL, NULL),
+(59, 'RLM', 'Fully regulated Lithium Metal Batteries (Class 9)', NULL, NULL),
+(60, 'RMD', 'Miscellaneous Dangerous Goods', NULL, NULL),
+(61, 'RNG', 'Non-Flammable Non-Toxic Gas', NULL, NULL),
+(62, 'ROP', 'Organic Peroxide', NULL, NULL),
+(63, 'ROX', 'Oxidizer', NULL, NULL),
+(64, 'RPB', 'Toxic Substance', NULL, NULL),
+(65, 'RPG', 'Toxic Gas', NULL, NULL),
+(66, 'RRE', 'Excepted Quantities of Radioactive Material', NULL, NULL),
+(67, 'RRW', 'Radioactive Material Category I-White', NULL, NULL),
+(68, 'RRY', 'Radioactive Material Categories II-Yellow and III-Yellow', NULL, NULL),
+(69, 'RSB', 'Polymeric Beads', NULL, NULL),
+(70, 'RSC', 'Spontaneously Combustible', NULL, NULL),
+(71, 'RXB', 'Explosives 1.4B', NULL, NULL),
+(72, 'RXC', 'Explosives 1.4C', NULL, NULL),
+(73, 'RXD', 'Explosives 1.4D', NULL, NULL),
+(74, 'RXE', 'Explosives 1.4E', NULL, NULL),
+(75, 'RXG', 'Explosives 1.4G', NULL, NULL),
+(76, 'RXS', 'Explosives 1.4S', NULL, NULL),
+(77, 'SCO', 'Cargo secure for All-Cargo Aircraft Only', NULL, NULL),
+(78, 'SCY', 'Security Cargo - personl effects requiring prescreening', NULL, NULL),
+(79, 'SHL', 'Save Human Life', NULL, NULL),
+(80, 'SHR', 'Cargo secure for All-Passenger, All-Cargo aircraft in accordance with high risk requirements', NULL, NULL),
+(81, 'SPF', 'Laboratory Animals', NULL, NULL),
+(82, 'SPX', 'Secured Freight for passenger aircraft', NULL, NULL),
+(83, 'SUR', 'Surface Transportation', NULL, NULL),
+(84, 'SWP', 'Sporting Weapons', NULL, NULL),
+(85, 'VAL', 'Valuable Cargo', NULL, NULL),
+(86, 'VOL', 'Volume', NULL, NULL),
+(87, 'VUN', 'Vulnerable Cargo', NULL, NULL),
+(88, 'WET', 'Shipments of Wet Material not Packed in Watertight Containers', NULL, NULL),
+(89, 'XPS', 'Priority Small Package', NULL, NULL);
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `roleid`, `designation`, `staffid`, `active`, `remember_token`, `created_at`, `updated_at`, `telephone`) VALUES
+(1, 'Richmond Martison', 'admin@gmail.com', NULL, '$2y$10$PgQbNwCrg2OIE./5Fj.8JO59JzCCHT3BWfEnpQ0Em.FpoC/Du4VG6', '1', 'ADMIN', NULL, 1, NULL, NULL, NULL, NULL),
+(2, 'Rachel Byrd1', 'jetebip@mailinator.com', NULL, '$2y$10$9UKmLiBLAUbEMx4F9RzQKu.9glOSHwcVtQQJibuz.qao.p3YaCjm.', '2', 'STAFF', NULL, 0, NULL, '2022-03-15 08:29:01', '2022-03-15 08:55:07', '+1 (793) 389-3197'),
+(3, 'Lacey Emerson', 'fupugih@mailinator.com', NULL, '$2y$10$vC4/iB0Dwi8WUZ3tsYf07.Bv.4wZ80XNCRKcOc0IZEWsQ9ndrVavC', '2', 'STAFF', 'Ipsam qui fugiat est', 0, NULL, '2022-03-18 02:46:20', '2022-03-18 02:46:20', '+1 (273) 271-3178'),
+(4, 'Porter Pope', 'qykanirevi@mailinator.com', NULL, '$2y$10$B8YMg3EUWRocFrd82k13ReYGVHqdrjCWQzHKo3LT2ck2nNC3jIPaC', '2', 'STAFF', 'Ad commodo et vitae', 1, NULL, '2022-03-18 02:48:24', '2022-03-18 02:48:24', '+1 (301) 362-1086');
+
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
