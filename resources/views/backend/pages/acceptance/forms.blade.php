@@ -17,6 +17,11 @@
             height: calc(1.5em + 0.9rem + 2px) !important;
         }
 
+        .spinner-grow {
+            opacity: 1 !important;
+            animation: none !important;
+        }
+
     </style>
 @endsection
 @section('scripts')
