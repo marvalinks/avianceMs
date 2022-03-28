@@ -9,12 +9,14 @@ use Symfony\Component\Process\Process;
 
 class WeightReading extends Component
 {
-    public $comport = "COM";
-    public $weight;
+    public $comport = "0";
+    public $weight = "0";
+
+    protected $listeners = ['readWeight' => 'testPythonScript'];
 
     public function mount()
     {
-        $this->testPythonScript();
+        // $this->testPythonScript();
     }
 
     public function render()
@@ -26,11 +28,11 @@ class WeightReading extends Component
     {
         $path = app_path('PythonScripts');
         // dd($path . '/weight.py');
-        // $service = new LaravelPython();
-        // $result = $service->run($path . '/weight.py');
+        $service = new LaravelPython();
+        $result = $service->run($path . '/weight.py');
         // $result = \Python::run($path . '/weight.py');
-        $result = shell_exec("python ". $path . "/weight.py" ." 2>&1");
-        
+        // $result = shell_exec("python " . $path . "/weight.py" . " 2>&1");
+
         // dd($result);
         $this->weight = $result;
     }

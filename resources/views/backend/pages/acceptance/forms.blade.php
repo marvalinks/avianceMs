@@ -27,6 +27,11 @@
         });
     </script>
     @livewireScripts()
+    <script>
+        setInterval(function() {
+            Livewire.emit('readWeight')
+        }, 500);
+    </script>
 @endsection
 
 @section('content')

@@ -8,10 +8,10 @@
                     class="form-control flatpickr-input" placeholder="weight">
             </div>
         </div>
-        <div class="col-md-2 bbtt">
+        {{-- <div class="col-md-2 bbtt">
             <button wire:click.prevent="testPythonScript()" type="button" class="btn btn-danger me-4 mb-2 mb-md-0">
                 Read Weight
             </button>
-        </div>
+        </div> --}}
     </div>
 </div>

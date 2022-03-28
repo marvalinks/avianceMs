@@ -34,6 +34,7 @@ Route::group(['prefix' => '', 'as' => 'backend.', 'middleware' => ['auth']], fun
         Route::get('create', [AcceptanceModuleController::class, 'create'])->name('create');
         Route::post('create', [AcceptanceModuleController::class, 'submitForms'])->name('create');
         Route::get('edit', [AcceptanceModuleController::class, 'edit'])->name('edit');
+        Route::get('export', [AcceptanceModuleController::class, 'export'])->name('export');
     });
 
     Route::group(['prefix' => 'users', 'as' => 'users.', 'middleware' => ['adminAccess']], function () {

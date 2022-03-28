@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\AcceptancePool;
 use App\Models\Airline;
 use App\Models\HandlingCode;
 use App\Models\WeightLog;
@@ -43,6 +44,17 @@ class AcceptanceApiController extends Controller
         $success['acc_code'] =  $code;
         $success['handling_codes'] =  $handling_codes;
         $success['airlines'] =  $airlines;
+        return response()->json(['success' => $success], $this->successStatus);
+    }
+    public function acceptanceRequest(Request $request)
+    {
+        dd($request->all());
+        $data = $request->validate([
+            'airWaybill' => 'required', 'pieces' => 'required', 'weight' => 'required', 'volume' => 'required', 'origin' => 'required', 'destination' => 'required', 'statusCode' => 'required',
+            'author_name' => 'required', 'author_id' => 'required'
+        ]);
+        AcceptancePool::create($data);
+        $success['passed'] =  1;
         return response()->json(['success' => $success], $this->successStatus);
     }
 }

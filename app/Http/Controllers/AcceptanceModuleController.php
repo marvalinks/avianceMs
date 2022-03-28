@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AirbillExport;
 use App\Models\AcceptancePool;
 use App\Models\Airline;
 use App\Models\HandlingCode;
 use Illuminate\Http\Client\Pool;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Maatwebsite\Excel\Facades\Excel as Excel;
+use Barryvdh\Snappy\Facades\SnappyPdf as SnappyPdf;
 
 class AcceptanceModuleController extends Controller
 {
@@ -17,7 +20,7 @@ class AcceptanceModuleController extends Controller
 
     public function index(Request $request)
     {
-        $bills = AcceptancePool::latest()->paginate(50);
+        $bills = AcceptancePool::latest()->paginate(250);
         return view('backend.pages.acceptance.index', compact('bills'));
     }
     public function show(Request $request, $id)
@@ -132,7 +135,7 @@ class AcceptanceModuleController extends Controller
 
 
 
-        // dd($reqData);
+        // dd($bb);
 
         $curl = curl_init();
 
@@ -160,7 +163,7 @@ class AcceptanceModuleController extends Controller
             die('Curl returned error: ' . $err);
         }
 
-        dd($response, $httpcode);
+        // dd($response, $httpcode);
 
 
 
@@ -217,7 +220,7 @@ class AcceptanceModuleController extends Controller
             $aib = AcceptancePool::where('airWaybill', $dataResponse->airWaybill->prefix . '-' . $dataResponse->airWaybill->serial)->first();
 
             if (!$aib) {
-                AcceptancePool::create([
+                $bill = AcceptancePool::create([
                     'airWaybill' =>  $dataResponse->airWaybill->prefix . '-' . $dataResponse->airWaybill->serial,
                     'pieces' =>  $dataResponse->airWaybill->pieces,
                     'weight' =>  $dataResponse->airWaybill->weight->amount,
@@ -228,7 +231,50 @@ class AcceptanceModuleController extends Controller
                     'author_name' =>  auth()->user()->name,
                     'author_id' =>  auth()->user()->id
                 ]);
+                if (env('APP_ENV') == 'local') {
+                    $req = array(
+                        'airWaybill' =>  $dataResponse->airWaybill->prefix . '-' . $dataResponse->airWaybill->serial,
+                        'pieces' =>  $dataResponse->airWaybill->pieces,
+                        'weight' =>  $dataResponse->airWaybill->weight->amount,
+                        'volume' =>  $dataResponse->airWaybill->volume->amount,
+                        'origin' =>  $dataResponse->airWaybill->origin->code,
+                        'destination' =>  $dataResponse->airWaybill->destination->code,
+                        'statusCode' =>  $dataResponse->parts[0]->statusCode,
+                        'author_name' =>  auth()->user()->name,
+                        'author_id' =>  auth()->user()->id
+                    );
+                    // $callback_url = "localhost:8000";
+                    $callback_url = "159.223.238.21";
+
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => $callback_url . '/api/v1/acceptance-request',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_CUSTOMREQUEST => "POST",
+                        CURLOPT_POSTFIELDS => json_encode($req),
+                        CURLOPT_HTTPHEADER => [
+                            "content-type: application/json",
+                            "cache-control: no-cache"
+                        ],
+                    ));
+
+                    $response = curl_exec($curl);
+                    $err = curl_error($curl);
+
+                    if ($err) {
+                        // there was an error contacting the Paystack API
+                        die('Curl returned error: ' . $err);
+                    }
+
+                    $tranx = json_decode($response, true);
+                    dd($tranx);
+                }
             }
         }
+    }
+
+    public function export(Request $request)
+    {
+        return Excel::download(new AirbillExport, 'records.xlsx');
+        // $pdf = SnappyPdf::loadView('pages.pdfs.payment', []);
     }
 }

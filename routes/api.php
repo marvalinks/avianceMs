@@ -22,4 +22,5 @@ Route::group(['prefix' => 'v1', 'middleware' => []], function () {
     Route::post('login', [UserApiController::class, 'loginUser']);
     Route::post('submit-weight', [AcceptanceApiController::class, 'postWeight']);
     Route::get('requirements', [AcceptanceApiController::class, 'getRequirements']);
+    Route::get('acceptance-request', [AcceptanceApiController::class, 'acceptanceRequest']);
 });
