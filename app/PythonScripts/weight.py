@@ -9,7 +9,7 @@ def w2():
     # print(random.choice(list1))
 
     serialBout = serial.Serial()
-    serialBout.port = "COM5"
+    serialBout.port = "COM3"
     serialBout.open()
 
     packet = serialBout.readline()
