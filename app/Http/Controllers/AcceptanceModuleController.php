@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\AirbillExport;
 use App\Models\AcceptancePool;
 use App\Models\Airline;
 use App\Models\HandlingCode;
 use Illuminate\Http\Client\Pool;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Maatwebsite\Excel\Facades\Excel as Excel;
-use Barryvdh\Snappy\Facades\SnappyPdf as SnappyPdf;
 
 class AcceptanceModuleController extends Controller
 {
@@ -274,7 +271,8 @@ class AcceptanceModuleController extends Controller
 
     public function export(Request $request)
     {
-        return Excel::download(new AirbillExport, 'records.xlsx');
+        dd('io');
+        // return Excel::download(new AirbillExport, 'records.xlsx');
         // $pdf = SnappyPdf::loadView('pages.pdfs.payment', []);
     }
 }
