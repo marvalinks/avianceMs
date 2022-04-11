@@ -12,7 +12,7 @@
         <div class="col-md-4">
             <div class="mb-3">
                 <h2>COMPORT (3) STATUS</h2>
-                <div class="spinner-grow text-success m-2" role="status">
+                <div class="spinner-grow text-{{ $color }} m-2" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
             </div>

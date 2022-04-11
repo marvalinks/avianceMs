@@ -57,6 +57,8 @@ class AcceptanceModuleController extends Controller
 
         // dd($data);
 
+        // $data['prefix'] = '032';
+
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
 
@@ -160,7 +162,7 @@ class AcceptanceModuleController extends Controller
             die('Curl returned error: ' . $err);
         }
 
-        // dd($response, $httpcode);
+        dd($response, $httpcode);
 
 
 

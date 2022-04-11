@@ -35,7 +35,7 @@
     <script>
         setInterval(function() {
             Livewire.emit('readWeight')
-        }, 500);
+        }, 1000);
     </script>
 @endsection
 
