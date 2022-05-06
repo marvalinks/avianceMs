@@ -42,7 +42,7 @@
                             role="button" aria-haspopup="false" aria-expanded="false">
                             <img src="/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
                             <span class="pro-user-name ms-1">
-                                {{ auth()->user()->name }} <i class="uil uil-angle-down"></i>
+                                {{ session()->get('user')['name'] }} <i class="uil uil-angle-down"></i>
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
@@ -133,12 +133,20 @@
                                 </a>
 
                             </li>
-                            @if (auth()->user()->roleid == 1)
+                            @if (session()->get('user')['roleid'] == 1)
                                 <li class="nav-item ">
                                     <a class="nav-link" href="{{ route('backend.users.list') }}"
                                         id="topnav-layout" role="button" data-bs-toggle="" aria-haspopup="true"
                                         aria-expanded="false">
                                         <i data-feather="home"></i> Manage Users
+                                    </a>
+
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="{{ route('backend.signees.list') }}"
+                                        id="topnav-layout" role="button" data-bs-toggle="" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        <i data-feather="home"></i> Manage Signees
                                     </a>
 
                                 </li>

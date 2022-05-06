@@ -5,13 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 
 class UserModuleController extends Controller
 {
 
+    protected $routePath = "http://159.223.238.21/api/v1";
+
     public function index(Request $request)
     {
-        $users = User::latest()->paginate(50);
+        $url = $this->routePath.'/users';
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'X-Requested-With' => 'XMLHttpRequest'
+        ])->get($url);
+
+        $users = $response->json()['success']['users']['data'];
         return view('backend.pages.users.index', compact('users'));
     }
     public function create(Request $request)
@@ -21,22 +30,24 @@ class UserModuleController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required', 'email' => 'required|unique:users',
+            'name' => 'required', 'email' => 'required',
             'telephone' => '', 'role' => 'required', 'staffid' => '',
             'active' => 'required', 'password' => 'required'
         ]);
 
-        if (intval($data['role']) == intval(1)) {
-            $data['designation'] = 'ADMIN';
-        }
-        if (intval($data['role']) == intval(2)) {
-            $data['designation'] = 'STAFF';
-        }
-        $data['roleid'] = $data['role'];
-        $data['password'] = Hash::make($data['password']);
-        unset($data['role']);
+        $url = $this->routePath.'/users/store';
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'X-Requested-With' => 'XMLHttpRequest'
+        ])->post($url, $data);
 
-        User::create($data);
+        // dd($response->json());
+
+        if($response->json()['success']['passed'] == 0) {
+            $request->session()->flash('alert-danger', 'Error processing');
+            return back();
+        }
+
         $request->session()->flash('alert-success', 'User Successfully created');
         return back();
     }
@@ -51,22 +62,22 @@ class UserModuleController extends Controller
         $data = $request->validate([
             'name' => 'required', 'email' => 'required',
             'telephone' => '', 'role' => 'required', 'staffid' => '',
-            'active' => 'required'
+            'active' => 'required', 'password' => ''
         ]);
+        $data['userid'] = $user->id;
 
-        if (intval($data['role']) == intval(1)) {
-            $data['designation'] = 'ADMIN';
-        }
-        if (intval($data['role']) == intval(2)) {
-            $data['designation'] = 'STAFF';
-        }
-        $data['roleid'] = $data['role'];
-        if ($request->password) {
-            $data['password'] = Hash::make($request->password);
-        }
-        unset($data['role']);
+        $url = $this->routePath.'/users/update';
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'X-Requested-With' => 'XMLHttpRequest'
+        ])->post($url, $data);
 
-        $user->update($data);
+        // dd($response->json());
+
+        if($response->json()['success']['passed'] == 0) {
+            $request->session()->flash('alert-danger', 'Error processing');
+            return back();
+        }
         $request->session()->flash('alert-success', 'User Successfully updated');
         return redirect()->route('backend.users.list');
     }

@@ -30,7 +30,7 @@
                             <div class="row g-0">
                                 <div class="col-lg-6 p-4">
                                     <div class="mx-auto">
-                                        <a href="index.html">
+                                        <a href="#">
                                             <img src="/assets/images/aviance.png" alt="" height="24" />
                                         </a>
                                     </div>
@@ -42,6 +42,11 @@
 
                                     <form action="{{ route('login') }}" autocomplete="off" method="POST"
                                         class="authentication-form">
+                                        @if ($errors->any())
+                                        @foreach ($errors->all() as $error)
+                                        <div class="clred">{{$error}}</div>
+                                        @endforeach
+                                        @endif
                                         @csrf
                                         <div class="mb-3">
                                             <label class="form-label">Email Address</label>
@@ -56,7 +61,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label">Password</label>
-                                            <a href="#" class="float-end text-muted text-unline-dashed ms-1">Forgot your
+                                            <a href="#" onclick="alert('please contact the administrator');"" class="float-end text-muted text-unline-dashed ms-1">Forgot your
                                                 password?</a>
                                             <div class="input-group">
                                                 <span class="input-group-text">

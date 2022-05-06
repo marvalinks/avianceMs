@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Signee;
 use App\Models\User;
 use App\Models\WeightLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class UserApiController extends Controller
+class SigneeApiController extends Controller
 {
     public $successStatus = 200;
 
@@ -42,25 +43,15 @@ class UserApiController extends Controller
     {
 
         $data = [
-            'password' => $request->password,
-            'name' => $request->name, 'email' => $request->email, 'active' => $request->active,
-            'telephone' => $request->telephone ?? null, 'staffid' => $request->staffid ?? null,
-            'role' => $request->role
+            'passcode' => $request->passcode,
+            'name' => $request->name
         ];
 
         
-        if (intval($data['role']) == intval(1)) {
-            $data['designation'] = 'ADMIN';
-        }
-        if (intval($data['role']) == intval(2)) {
-            $data['designation'] = 'STAFF';
-        }
-        $data['roleid'] = $data['role'];
+        
         $data['userid'] = explode('-', strtoupper((string) Str::uuid()))[mt_rand(0, 3)];
-        $data['password'] = Hash::make($data['password']);
-        unset($data['role']);
 
-        $user = User::create($data);
+        $user = Signee::create($data);
 
         $success['passed'] =  1;
         $success['user'] =  $user;
@@ -68,31 +59,18 @@ class UserApiController extends Controller
     }
     public function index(Request $request)
     {
-        $users = User::latest()->paginate(50);
+        $users = Signee::latest()->paginate(50);
         $success['passed'] =  1;
         $success['users'] =  $users;
         return response()->json(['success' => $success], $this->successStatus);
     }
     public function update(Request $request)
     {
-        $user = User::findOrFail($request->userid);
+        $user = Signee::where('userid', $request->userid)->first();
         $data = [
-            'name' => $request->name, 'email' => $request->email, 'active' => $request->active,
-            'telephone' => $request->telephone ?? null, 'staffid' => $request->staffid ?? null,
-            'role' => $request->role, 'password' => $request->password
+            'passcode' => $request->passcode,
+            'name' => $request->name
         ];
-
-        if (intval($data['role']) == intval(1)) {
-            $data['designation'] = 'ADMIN';
-        }
-        if (intval($data['role']) == intval(2)) {
-            $data['designation'] = 'STAFF';
-        }
-        $data['roleid'] = $data['role'];
-        if ($request->password) {
-            $data['password'] = Hash::make($request->password);
-        }
-        unset($data['role']);
 
         $user->update($data);
 

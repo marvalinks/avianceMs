@@ -45,6 +45,11 @@
             <div class="card-body">
                 <form action="{{ route('backend.acceptance.create') }}" autocomplete="on" class="row mtop-30 accform"
                     method="post">
+                    @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                    <div class="clred">{{$error}}</div>
+                    @endforeach
+                    @endif
                     @csrf
                     <div class="row">
                         <div class="row">
@@ -66,8 +71,8 @@
                                 <select class="form-control js-example-basic-multiple" name="prefix">
                                     <option value="">-choose-</option>
                                     @foreach ($airlines as $airline)
-                                        <option value="{{ $airline->prefix }}">
-                                            [{{ $airline->prefix }}] {{ $airline->airline }}</option>
+                                        <option value="{{ $airline['prefix'] }}">
+                                            [{{ $airline['prefix'] }}] {{ $airline['airline'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -123,8 +128,8 @@
                                 <select class="form-control js-example-basic-multiple" name="specialHandlingCodes[]"
                                     multiple="multiple">
                                     @foreach ($handling_codes as $handling_code)
-                                        <option value="{{ $handling_code->code }}">
-                                            {{ $handling_code->code }}</option>
+                                        <option value="{{ $handling_code['code'] }}">
+                                            {{ $handling_code['code'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -165,13 +170,7 @@
                         </div>
 
                     </div>
-                    <div class="row">
-                        <div class="col-md-4"></div>
-                        <div class="col-md-4"></div>
-                        <div class="col-md-4">
-                            <button type="submit" class="btn btn-secondary submit-btn">Save & Submit</button>
-                        </div>
-                    </div>
+                    @livewire('accept-form-inputs')
                 </form>
 
             </div>

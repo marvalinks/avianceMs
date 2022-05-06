@@ -14,6 +14,7 @@ class AcceptanceModuleController extends Controller
 
     protected $cargoKey = 'RoPgFWG3Pv2ymLF19VyHuGVfUnluDo3x';
     protected $stationCode = 'ACC';
+    protected $routePath = "http://159.223.238.21/api/v1";
 
     public function index(Request $request)
     {
@@ -28,9 +29,18 @@ class AcceptanceModuleController extends Controller
 
     public function create(Request $request)
     {
-        $code = $this->stationCode;
-        $handling_codes = HandlingCode::latest()->get();
-        $airlines = Airline::latest()->get();
+
+        $url = $this->routePath.'/requirements';
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'X-Requested-With' => 'XMLHttpRequest'
+        ])->get($url);
+
+
+        $code = $response->json()['success']['acc_code'];
+        $handling_codes = $response->json()['success']['handling_codes'];
+        $airlines = $response->json()['success']['airlines'];
+
         return view('backend.pages.acceptance.forms', compact('code', 'handling_codes', 'airlines'));
     }
 
@@ -50,12 +60,27 @@ class AcceptanceModuleController extends Controller
             'blockedForManifesting' => ''
         ]);
 
+        // dd($data);
+
         if (floatval($data['weight']) == floatval(0)) {
             $request->session()->flash('alert-danger', 'Incorrect weight scale readings..');
             return back();
         }
 
-        // dd($data);
+        // $url = $this->routePath.'/acceptance-request';
+        // $response = Http::withHeaders([
+        //     'Content-Type' => 'application/json',
+        //     'X-Requested-With' => 'XMLHttpRequest'
+        // ])->post($url, $data);
+
+        // dd($response);
+
+        // if($response->json()['success']['passed'] == 0) {
+        //     $request->session()->flash('alert-danger', 'Error submitting request...');
+        //     return back();
+        // }
+
+        // dd($response->json());
 
         // $data['prefix'] = '032';
 
@@ -65,40 +90,12 @@ class AcceptanceModuleController extends Controller
         $SecKey = $this->cargoKey;
         $airwayBill = $data['prefix'] . '-' . $data['serial'];
 
-        $reqData = array(
-            'airWaybill' => [
-                "prefix" => intval($data['prefix']),
-                "serial" => intval($data['serial']),
-                "originCode" => $this->stationCode,
-                "destinationCode" => $data['destinationCode'],
-                "pieces" => intval($data['pieces']),
-                "weight" => [
-                    "amount" => intval($data['weight']),
-                    "unit" => "KG"
-                ],
-                "natureOfGoods" => $data['natureOfGoods'] ?? null
+        // $airwayBill = '176-22345678';
+        // dd($airwayBill);
+        // $this->getAirwayBill($airwayBill, true);
+        // dd('ok');
 
-            ],
-            'part' => [
-                "pieces" => $data['pieces'],
-                "weight" => [
-                    "amount" => intval($data['weight']),
-                    "unit" => "KG"
-                ],
-
-                "volume" => [
-                    "amount" => intval($data['volume']) ?? 0,
-                    "unit" => "MC"
-                ],
-                "specialHandlingCodes" => $data['specialHandlingCodes'] ?? [],
-                "securityStatus" => $data['securityStatus'],
-                "x-ray" => $data['x-ray'] ?? null,
-                "remarks" => $data['remarks'] ?? null,
-                "blockedForManifesting" => $data['blockedForManifesting'] ?? null
-
-
-            ]
-        );
+        
 
         $bb = array(
             "airWaybill" => [
@@ -162,19 +159,21 @@ class AcceptanceModuleController extends Controller
             die('Curl returned error: ' . $err);
         }
 
-        dd($response, $httpcode);
+        // dd(json_decode($response, true), $httpcode);
 
 
 
         if ($httpcode == 422) {
             $request->session()->flash('alert-danger', 'Global error processing request');
+            return back();
         }
         if ($httpcode == 201) {
+            // dd('ok');
             $this->getAirwayBill($airwayBill, true);
         }
 
         $request->session()->flash('alert-success', 'Acceptance form data successfully processed');
-        return redirect()->route('backend.acceptance.list');
+        return back();
 
         $tranx = json_decode($response, true);
     }
@@ -203,6 +202,8 @@ class AcceptanceModuleController extends Controller
 
         $dataResponse = json_decode($response);
 
+        dd($dataResponse, $httpcode);
+
         if ($err) {
             die('Curl returned error: ' . $err);
         }
@@ -227,46 +228,9 @@ class AcceptanceModuleController extends Controller
                     'origin' =>  $dataResponse->airWaybill->origin->code,
                     'destination' =>  $dataResponse->airWaybill->destination->code,
                     'statusCode' =>  $dataResponse->parts[0]->statusCode,
-                    'author_name' =>  auth()->user()->name,
-                    'author_id' =>  auth()->user()->id
+                    'author_name' =>  'test',
+                    'author_id' =>  2
                 ]);
-                if (env('APP_ENV') == 'local') {
-                    $req = array(
-                        'airWaybill' =>  $dataResponse->airWaybill->prefix . '-' . $dataResponse->airWaybill->serial,
-                        'pieces' =>  $dataResponse->airWaybill->pieces,
-                        'weight' =>  $dataResponse->airWaybill->weight->amount,
-                        'volume' =>  $dataResponse->airWaybill->volume->amount,
-                        'origin' =>  $dataResponse->airWaybill->origin->code,
-                        'destination' =>  $dataResponse->airWaybill->destination->code,
-                        'statusCode' =>  $dataResponse->parts[0]->statusCode,
-                        'author_name' =>  auth()->user()->name,
-                        'author_id' =>  auth()->user()->id
-                    );
-                    // $callback_url = "localhost:8000";
-                    $callback_url = "159.223.238.21";
-
-                    curl_setopt_array($curl, array(
-                        CURLOPT_URL => $callback_url . '/api/v1/acceptance-request',
-                        CURLOPT_RETURNTRANSFER => true,
-                        CURLOPT_CUSTOMREQUEST => "POST",
-                        CURLOPT_POSTFIELDS => json_encode($req),
-                        CURLOPT_HTTPHEADER => [
-                            "content-type: application/json",
-                            "cache-control: no-cache"
-                        ],
-                    ));
-
-                    $response = curl_exec($curl);
-                    $err = curl_error($curl);
-
-                    if ($err) {
-                        // there was an error contacting the Paystack API
-                        die('Curl returned error: ' . $err);
-                    }
-
-                    $tranx = json_decode($response, true);
-                    dd($tranx);
-                }
             }
         }
     }

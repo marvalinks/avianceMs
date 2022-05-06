@@ -37,8 +37,8 @@ class AcceptanceApiController extends Controller
     public function getRequirements(Request $request)
     {
         $code = $this->stationCode;
-        $handling_codes = HandlingCode::latest()->pluck('code');
-        $airlines = Airline::latest()->pluck('prefix');
+        $handling_codes = HandlingCode::latest()->get();
+        $airlines = Airline::latest()->get();
 
         $success['passed'] =  1;
         $success['acc_code'] =  $code;
@@ -48,13 +48,139 @@ class AcceptanceApiController extends Controller
     }
     public function acceptanceRequest(Request $request)
     {
-        dd($request->all());
-        $data = $request->validate([
-            'airWaybill' => 'required', 'pieces' => 'required', 'weight' => 'required', 'volume' => 'required', 'origin' => 'required', 'destination' => 'required', 'statusCode' => 'required',
-            'author_name' => 'required', 'author_id' => 'required'
-        ]);
-        AcceptancePool::create($data);
-        $success['passed'] =  1;
+
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+
+        $data = $request->all();
+
+        $SecKey = $this->cargoKey;
+        $airwayBill = $data['prefix'] . '-' . $data['serial'];
+        
+
+        $bb = array(
+            "airWaybill" => [
+                "prefix" => $data['prefix'],
+                "serial" => $data['serial'],
+                "originCode" => $this->stationCode,
+                "destinationCode" => $data['destinationCode'],
+                "pieces" => intval($data['pieces']),
+                "weight" => [
+                    "amount" => intval($data['weight']),
+                    "unit" => "KG"
+                ],
+                "natureOfGoods" => $data['natureOfGoods'] ?? null
+            ],
+            "part" => [
+                "pieces" => intval($data['pieces']),
+                "weight" => [
+                    "amount" => intval($data['weight']),
+                    "unit" => "KG"
+                ],
+                "volume" => [
+                    "amount" => intval($data['volume']),
+                    "unit" => "MC"
+                ],
+                "specialHandlingCodes" => $data['specialHandlingCodes'],
+                "securityStatus" => $data['securityStatus'],
+                "x-ray" => intval($data['x-ray']) == 1 ? true : false,
+                "remarks" => $data['remarks'],
+                "blockedForManifesting" => intval($data['blockedForManifesting']) == 1 ? true : false
+            ]
+        );
+
+        $curl = curl_init();
+
+        $reqURL = "https://api-gateway-dev.champ.aero/csp/acceptance/v1/airwaybills/acceptance-requests";
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $reqURL,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($bb),
+            CURLOPT_HTTPHEADER => [
+                'Apikey: ' . $this->cargoKey,
+                'Stationcode: ' . $this->stationCode,
+                "content-type: application/json",
+                "cache-control: no-cache"
+            ],
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        if ($err) {
+            die('Curl returned error: ' . $err);
+        }
+
+        // dd($response, $httpcode);
+
+
+
+        if ($httpcode == 422) {
+            $success['passed'] =  0;
+            return response()->json(['success' => $success], $this->successStatus);
+        }
+        if ($httpcode == 201) {
+            $this->getAirwayBill($airwayBill);
+
+            $success['passed'] =  1;
+            return response()->json(['success' => $success], $this->successStatus);
+        }
+
+        $success['passed'] =  0;
         return response()->json(['success' => $success], $this->successStatus);
+    }
+
+    protected function getAirwayBill($bill)
+    {
+        $curl = curl_init();
+        $reqURL = "https://api-gateway-dev.champ.aero/csp/acceptance/v1/airwaybills";
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $reqURL . '/' . $bill,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_POSTFIELDS => [],
+            CURLOPT_HTTPHEADER => [
+                'Apikey: ' . $this->cargoKey,
+                'Stationcode: ' . $this->stationCode,
+                "content-type: application/json",
+                "cache-control: no-cache"
+            ],
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        $dataResponse = json_decode($response);
+
+        if ($err) {
+            die('Curl returned error: ' . $err);
+        }
+
+        if ($httpcode == 422) {
+            die('Global error processing request');
+        }
+
+        if ($httpcode == 200) {
+            $aib = AcceptancePool::where('airWaybill', $dataResponse->airWaybill->prefix . '-' . $dataResponse->airWaybill->serial)->first();
+
+            if (!$aib) {
+                $bill = AcceptancePool::create([
+                    'airWaybill' =>  $dataResponse->airWaybill->prefix . '-' . $dataResponse->airWaybill->serial,
+                    'pieces' =>  $dataResponse->airWaybill->pieces,
+                    'weight' =>  $dataResponse->airWaybill->weight->amount,
+                    'volume' =>  $dataResponse->airWaybill->volume->amount,
+                    'origin' =>  $dataResponse->airWaybill->origin->code,
+                    'destination' =>  $dataResponse->airWaybill->destination->code,
+                    'statusCode' =>  $dataResponse->parts[0]->statusCode,
+                    'author_name' =>  auth()->user()->name,
+                    'author_id' =>  auth()->user()->id
+                ]);
+            }
+        }
     }
 }

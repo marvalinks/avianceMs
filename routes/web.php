@@ -3,6 +3,7 @@
 use App\Http\Controllers\AcceptanceModuleController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\BackendController;
+use App\Http\Controllers\SigneeController;
 use App\Http\Controllers\UserModuleController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +26,7 @@ Route::post('login', [AuthenticationController::class, 'postLogin'])->name('logi
 
 Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
 
-Route::group(['prefix' => '', 'as' => 'backend.', 'middleware' => ['auth']], function () {
+Route::group(['prefix' => '', 'as' => 'backend.', 'middleware' => ['sessionGrant']], function () {
     Route::get('dahboard', [BackendController::class, 'dashboard'])->name('dashboard');
 
     Route::group(['prefix' => 'acceptance', 'as' => 'acceptance.', 'middleware' => []], function () {
@@ -43,5 +44,13 @@ Route::group(['prefix' => '', 'as' => 'backend.', 'middleware' => ['auth']], fun
         Route::post('create', [UserModuleController::class, 'store'])->name('create');
         Route::get('edit/{id}', [UserModuleController::class, 'edit'])->name('edit');
         Route::post('edit/{id}', [UserModuleController::class, 'update'])->name('edit');
+    });
+
+    Route::group(['prefix' => 'signees', 'as' => 'signees.', 'middleware' => ['adminAccess']], function () {
+        Route::get('', [SigneeController::class, 'index'])->name('list');
+        Route::get('create', [SigneeController::class, 'create'])->name('create');
+        Route::post('create', [SigneeController::class, 'store'])->name('create');
+        Route::get('edit/{id}', [SigneeController::class, 'edit'])->name('edit');
+        Route::post('edit/{id}', [SigneeController::class, 'update'])->name('edit');
     });
 });

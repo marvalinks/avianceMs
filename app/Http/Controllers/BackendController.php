@@ -9,7 +9,8 @@ class BackendController extends Controller
 
     public function dashboard(Request $request)
     {
-        if (!auth()->user()) {
+        $userSession = session()->get('user');
+        if (!$userSession) {
             return redirect()->route('login');
         }
 

@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class AdminAccess
+class SessionGrant
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,8 @@ class AdminAccess
      */
     public function handle(Request $request, Closure $next)
     {
-        if (session()->get('user') && session()->get('user')['roleid'] != 1) {
-            die('Access Denied. Kindly contact your ADMIN');
-            // return redirect()->route('backend.dashboard');
+        if (!session()->get('user')) {
+            return redirect()->route('login');
         }
         return $next($request);
     }
