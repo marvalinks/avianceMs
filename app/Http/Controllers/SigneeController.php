@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Signee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class SigneeController extends Controller
 {
@@ -62,6 +63,11 @@ class SigneeController extends Controller
             'signature' => '', 
         ]);
         $data['userid'] = $user->userid;
+
+        if($request->signature) {
+            $path = Storage::disk('do')->put('aviancems', $request->signature, 'public');
+            $data['signature'] = $path;
+        }
 
         $url = $this->routePath.'/signees/update';
         $response = Http::withHeaders([

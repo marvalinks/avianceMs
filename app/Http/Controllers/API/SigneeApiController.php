@@ -44,7 +44,7 @@ class SigneeApiController extends Controller
 
         $data = [
             'passcode' => $request->passcode,
-            'name' => $request->name
+            'name' => $request->name, 'signature' => $request->path
         ];
 
         

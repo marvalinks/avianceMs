@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\AcceptancePool;
 use App\Models\Airline;
+use App\Models\ConfigurationModule;
 use App\Models\HandlingCode;
 use App\Models\WeightLog;
 use Illuminate\Http\Request;
@@ -13,8 +14,22 @@ use Illuminate\Support\Str;
 class AcceptanceApiController extends Controller
 {
     public $successStatus = 200;
-    protected $cargoKey = 'RoPgFWG3Pv2ymLF19VyHuGVfUnluDo3x';
+
+
+    protected $cargoKey = 'iNNa2ZZDikD7IYLrfvyfqVd5en5vN5cN';
     protected $stationCode = 'ACC';
+    // protected $routePath = "http://159.223.238.21/api/v1";
+    protected $routePath = "http://localhost:9000/api/v1";
+    public $configurations;
+
+    public function __construct()
+    {
+        $configurations = ConfigurationModule::first();
+        if(!$configurations) {
+            redirect()->route('backend.configurations.index')->send();
+        }
+        $this->configurations = $configurations;
+    }
 
 
     public function postWeight(Request $request)
@@ -54,6 +69,10 @@ class AcceptanceApiController extends Controller
 
         $data = $request->all();
 
+        // $success['passed'] =  1;
+        // $success['data'] =  $data;
+        // return response()->json(['success' => $success], $this->successStatus);
+
         $SecKey = $this->cargoKey;
         $airwayBill = $data['prefix'] . '-' . $data['serial'];
         
@@ -62,7 +81,7 @@ class AcceptanceApiController extends Controller
             "airWaybill" => [
                 "prefix" => $data['prefix'],
                 "serial" => $data['serial'],
-                "originCode" => $this->stationCode,
+                "originCode" => $this->configurations->stationCode,
                 "destinationCode" => $data['destinationCode'],
                 "pieces" => intval($data['pieces']),
                 "weight" => [
@@ -91,7 +110,7 @@ class AcceptanceApiController extends Controller
 
         $curl = curl_init();
 
-        $reqURL = "https://api-gateway-dev.champ.aero/csp/acceptance/v1/airwaybills/acceptance-requests";
+        $reqURL = $this->configurations->apiPath."/acceptance-requests";
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => $reqURL,
@@ -99,8 +118,8 @@ class AcceptanceApiController extends Controller
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => json_encode($bb),
             CURLOPT_HTTPHEADER => [
-                'Apikey: ' . $this->cargoKey,
-                'Stationcode: ' . $this->stationCode,
+                'Apikey: ' . $this->configurations->apiKey,
+                'Stationcode: ' . $this->configurations->stationCode,
                 "content-type: application/json",
                 "cache-control: no-cache"
             ],
@@ -123,7 +142,7 @@ class AcceptanceApiController extends Controller
             return response()->json(['success' => $success], $this->successStatus);
         }
         if ($httpcode == 201) {
-            $this->getAirwayBill($airwayBill);
+            $this->getAirwayBill($airwayBill, $data['author_name'], $data['author_id']);
 
             $success['passed'] =  1;
             return response()->json(['success' => $success], $this->successStatus);
@@ -133,10 +152,10 @@ class AcceptanceApiController extends Controller
         return response()->json(['success' => $success], $this->successStatus);
     }
 
-    protected function getAirwayBill($bill)
+    protected function getAirwayBill($bill,$name, $id)
     {
         $curl = curl_init();
-        $reqURL = "https://api-gateway-dev.champ.aero/csp/acceptance/v1/airwaybills";
+        $reqURL = $this->configurations->apiPath;
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => $reqURL . '/' . $bill,
@@ -144,8 +163,8 @@ class AcceptanceApiController extends Controller
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_POSTFIELDS => [],
             CURLOPT_HTTPHEADER => [
-                'Apikey: ' . $this->cargoKey,
-                'Stationcode: ' . $this->stationCode,
+                'Apikey: ' . $this->configurations->apiKey,
+                'Stationcode: ' . $this->configurations->stationCode,
                 "content-type: application/json",
                 "cache-control: no-cache"
             ],
@@ -177,8 +196,8 @@ class AcceptanceApiController extends Controller
                     'origin' =>  $dataResponse->airWaybill->origin->code,
                     'destination' =>  $dataResponse->airWaybill->destination->code,
                     'statusCode' =>  $dataResponse->parts[0]->statusCode,
-                    'author_name' =>  auth()->user()->name,
-                    'author_id' =>  auth()->user()->id
+                    'author_name' =>  $name,
+                    'author_id' =>  $id
                 ]);
             }
         }

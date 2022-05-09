@@ -23,12 +23,15 @@ class AuthenticationController extends Controller
             'email' => 'required:email', 'password' => 'required'
         ]);
 
-        // if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-        //     $request->session()->regenerate();
-        //     return redirect()->route('backend.dashboard');
-        // }
+        if(env('APP_ENV') == 'production'){
+            if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+                $request->session()->regenerate();
+                return redirect()->route('backend.dashboard');
+            }
+    
+            return redirect()->route('backend.dashboard');
+        }
 
-        // return redirect()->route('backend.dashboard');
         
         $url = $this->routePath.'/login';
         $response = Http::withHeaders([

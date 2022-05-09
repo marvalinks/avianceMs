@@ -31,6 +31,8 @@
             $('.js-example-basic-multiple').select2();
         });
     </script>
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+
     @livewireScripts()
     <script>
         setInterval(function() {
@@ -63,6 +65,19 @@
                             </div>
                         </div>
                         <div class="col-md-12">
+                            <py-script>
+import random
+
+
+def w2():
+
+    list1 = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
+    print(random.choice(list1))
+    
+    
+
+w2()
+                            </py-script>
                             <p class="sub-header">airWaybill</p>
                         </div>
                         <div class="col-md-4">
