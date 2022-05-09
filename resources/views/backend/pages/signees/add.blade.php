@@ -28,9 +28,27 @@
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label class="form-label">Signature</label>
-                            <input type="file" name="signature" class="form-control flatpickr-input"
-                                placeholder="Telephone">
+                            <label class="form-label">Signature <span class="span-red">*</span></label>
+                            <input type="file" required name="signature" class="form-control flatpickr-input"
+                                placeholder="Signature">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Staff no <span class="span-red">*</span></label>
+                            <input type="text" name="staff_no" class="form-control flatpickr-input"
+                                placeholder="Staff no">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Designation <span class="span-red">*</span></label>
+                            <select required name="roleid" id="" class="form-control">
+                                <option value="">-choose-</option>
+                                <option value="1">Aviance Agent</option>
+                                <option value="2">Aviance Security Agent</option>
+                                <option value="3">Shipping Agent</option>
+                            </select>
                         </div>
                     </div>
                     

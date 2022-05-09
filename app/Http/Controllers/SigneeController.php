@@ -20,8 +20,14 @@ class SigneeController extends Controller
     {
         $data = $request->validate([
             'name' => 'required', 'passcode' => 'required',
-            'signature' => '', 
+            'signature' => 'required', 'roleid' => 'required',
+            'staff_no' => 'required',
         ]);
+
+        if($request->signature) {
+            $path = Storage::disk('do')->put('aviancems', $request->signature, 'public');
+            $data['signature'] = env('DO_URL').'/'.$path;
+        }
 
         $url = $this->routePath.'/signees/store';
         $response = Http::withHeaders([
@@ -60,7 +66,8 @@ class SigneeController extends Controller
         $user = Signee::where('userid', $id)->first();
         $data = $request->validate([
             'name' => 'required', 'passcode' => 'required',
-            'signature' => '', 
+            'signature' => '', 'roleid' => 'required',
+            'staff_no' => 'required',
         ]);
         $data['userid'] = $user->userid;
 

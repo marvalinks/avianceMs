@@ -44,11 +44,20 @@ class SigneeApiController extends Controller
 
         $data = [
             'passcode' => $request->passcode,
-            'name' => $request->name, 'signature' => $request->path
+            'name' => $request->name, 'signature' => $request->path,
+            'roleid' => $request->roleid, 'staff_no' => $request->roleid
         ];
+        
+        if($data['roleid'] == 1) {
+            $data['designation'] = 'Aviance Agent';
+        }
+        if($data['roleid'] == 2) {
+            $data['designation'] = 'Aviance Security Agent';
+        }
+        if($data['roleid'] == 3) {
+            $data['designation'] = 'Shipping Agent';
+        }
 
-        
-        
         $data['userid'] = explode('-', strtoupper((string) Str::uuid()))[mt_rand(0, 3)];
 
         $user = Signee::create($data);
@@ -69,8 +78,19 @@ class SigneeApiController extends Controller
         $user = Signee::where('userid', $request->userid)->first();
         $data = [
             'passcode' => $request->passcode,
-            'name' => $request->name
+            'name' => $request->name,
+            'roleid' => $request->roleid, 'staff_no' => $request->roleid
         ];
+
+        if($data['roleid'] == 1) {
+            $data['designation'] = 'Aviance Agent';
+        }
+        if($data['roleid'] == 2) {
+            $data['designation'] = 'Aviance Security Agent';
+        }
+        if($data['roleid'] == 3) {
+            $data['designation'] = 'Shipping Agent';
+        }
 
         $user->update($data);
 
