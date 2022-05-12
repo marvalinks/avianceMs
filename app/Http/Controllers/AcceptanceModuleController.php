@@ -17,8 +17,8 @@ class AcceptanceModuleController extends Controller
     // protected $cargoKey = 'RoPgFWG3Pv2ymLF19VyHuGVfUnluDo3x';
     protected $cargoKey = 'iNNa2ZZDikD7IYLrfvyfqVd5en5vN5cN';
     protected $stationCode = 'ACC';
-    protected $routePath = "http://159.223.238.21/api/v1";
-    // protected $routePath = "http://localhost:9000/api/v1";
+    // protected $routePath = "http://159.223.238.21/api/v1";
+    protected $routePath = "http://localhost:9000/api/v1";
     public $configurations;
 
     public function __construct()
@@ -38,7 +38,8 @@ class AcceptanceModuleController extends Controller
             'Content-Type' => 'application/json',
             'X-Requested-With' => 'XMLHttpRequest'
         ])->get($url);
-        $bills = $response->json()['success']['bills'];
+        $bills = $response->json()['success']['bills']['data'];
+        // dd($bills);
         return view('backend.pages.acceptance.index', compact('bills'));
     }
     public function show(Request $request, $id)

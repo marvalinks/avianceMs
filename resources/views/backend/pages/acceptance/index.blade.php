@@ -59,7 +59,7 @@
                                 <tr>
                                     <td>
                                         <a
-                                            href="{{ route('backend.acceptance.details', [$bill->airWaybill]) }}">{{ $bill->airWaybill }}</a>
+                                            href="{{ route('backend.acceptance.details', [$bill['airWaybill']]) }}">{{ $bill['airWaybill'] }}</a>
                                     </td>
                                     <td>{{ $bill['pieces'] }}</td>
                                     <td>{{ $bill['weight'] }} KG</td>
@@ -67,7 +67,7 @@
                                     <td>{{ $bill['origin'] }}</td>
                                     <td>{{ $bill['destination'] }}</td>
                                     <td>{{ $bill['statusCode'] }}</td>
-                                    <td>{{ $bill['published'] }}</td>
+                                    <td>{{ $bill['created_at'] }}</td>
                                     <td>{{ $bill['author_name'] }}</td>
                                     <td>
                                         <a href="{{ route('backend.acceptance.details', [$bill['airWaybill']]) }}">view
