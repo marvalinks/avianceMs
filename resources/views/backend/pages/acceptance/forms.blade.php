@@ -64,15 +64,43 @@
                                     value="{{ $code }}">
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label">Reading <span class="span-red">*</span></label>
+                                <input type="text" readonly class="form-control flatpickr-input"
+                                    id="pyrd">
+                            </div>
+                        </div>
                         <div class="col-md-12">
+                            <py-env>
+- serial
+                            </py-env>
                             <py-script>
 import random
-
+import math
+import serial
 
 def w2():
 
     list1 = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
-    print(random.choice(list1))
+    #print(random.choice(list1))
+    #print(math.sqrt(49))
+    #pyscript.write('pyrd', 'hello')
+    #Element('pyrd').element.value = random.choice(list1)
+    try:
+        serialBout = serial.Serial()
+        serialBout.port = "COM3"
+        serialBout.baudrate = 9600
+        serialBout.open()
+
+        while True:
+            if serialBout.in_waiting:
+                packet = serialBout.readline()
+                wtt = packet.decode("utf").rstrip("\n")
+                Element('pyrd').element.value = wtt
+    except:
+        #print("error")
+        Element('pyrd').element.value = "ERROR_REPORTING...."
     
     
 

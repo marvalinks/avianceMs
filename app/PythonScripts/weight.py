@@ -12,6 +12,7 @@ def w2():
     # try:
     #     serialBout = serial.Serial()
     #     serialBout.port = "COM3"
+    #     serialBout.baudrate = 9600
     #     serialBout.open()
 
     #     packet = serialBout.readline()
@@ -19,6 +20,14 @@ def w2():
     #     print(wtt)
     # except:
     #     print("error")
+
+
+    # while True:
+    #     if serialBout.in_waiting:
+    #         packet = serialBout.readline()
+    #         wtt = packet.decode("utf").rstrip("\n")
+    #         print(wtt)
+
 
 
 w2()
