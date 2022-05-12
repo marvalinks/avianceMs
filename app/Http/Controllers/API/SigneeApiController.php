@@ -45,16 +45,16 @@ class SigneeApiController extends Controller
         $data = [
             'passcode' => $request->passcode,
             'name' => $request->name, 'signature' => $request->path,
-            'roleid' => $request->roleid, 'staff_no' => $request->roleid
+            'roleid' => $request->roleid, 'staff_no' => $request->staff_no
         ];
         
-        if($data['roleid'] == 1) {
+        if(intval($data['roleid']) == intval(1)) {
             $data['designation'] = 'Aviance Agent';
         }
-        if($data['roleid'] == 2) {
+        if(intval($data['roleid']) == intval(2)) {
             $data['designation'] = 'Aviance Security Agent';
         }
-        if($data['roleid'] == 3) {
+        if(intval($data['roleid']) == intval(3)) {
             $data['designation'] = 'Shipping Agent';
         }
 

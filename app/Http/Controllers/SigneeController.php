@@ -24,6 +24,8 @@ class SigneeController extends Controller
             'staff_no' => 'required',
         ]);
 
+        // dd($data); 
+
         if($request->signature) {
             $path = Storage::disk('do')->put('aviancems', $request->signature, 'public');
             $data['signature'] = env('DO_URL').'/'.$path;
@@ -70,6 +72,8 @@ class SigneeController extends Controller
             'staff_no' => 'required',
         ]);
         $data['userid'] = $user->userid;
+
+        
 
         if($request->signature) {
             $path = Storage::disk('do')->put('aviancems', $request->signature, 'public');

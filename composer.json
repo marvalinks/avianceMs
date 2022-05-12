@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
@@ -10,6 +13,8 @@
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
+        "league/flysystem-sftp-v3": "^3.0",
+        "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/livewire": "^2.10",
         "robertogallea/laravel-python": "^0.1.1",
         "symfony/process": "^6.0"

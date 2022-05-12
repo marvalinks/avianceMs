@@ -31,7 +31,7 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $user['name'] }}</td>
-                                    <td>{{ $user['designation'] }}</td>
+                                    <td>{{ $user['designation'] ?? 'NA' }}</td>
                                     <td>{{ substr($user['passcode'], 0, 3) }} ***</td>
                                     <td>
                                         <a href="{{ route('backend.signees.edit', [$user['userid']]) }}">edit user</a>
