@@ -32,7 +32,13 @@ class AcceptanceModuleController extends Controller
 
     public function index(Request $request)
     {
-        $bills = AcceptancePool::latest()->paginate(250);
+        // $bills = AcceptancePool::latest()->paginate(250);
+        $url = $this->routePath.'/acceptance';
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'X-Requested-With' => 'XMLHttpRequest'
+        ])->get($url);
+        $bills = $response->json()['success']['bills'];
         return view('backend.pages.acceptance.index', compact('bills'));
     }
     public function show(Request $request, $id)

@@ -49,6 +49,14 @@ class AcceptanceApiController extends Controller
         return response()->json(['success' => $success], $this->successStatus);
     }
 
+    public function index(Request $request)
+    {
+        $bills = AcceptancePool::latest()->paginate(250);
+
+        $success['passed'] =  1;
+        $success['bills'] =  $bills;
+        return response()->json(['success' => $success], $this->successStatus);
+    }
     public function getRequirements(Request $request)
     {
         $code = $this->stationCode;

@@ -61,16 +61,16 @@
                                         <a
                                             href="{{ route('backend.acceptance.details', [$bill->airWaybill]) }}">{{ $bill->airWaybill }}</a>
                                     </td>
-                                    <td>{{ $bill->pieces }}</td>
-                                    <td>{{ $bill->weight }} KG</td>
-                                    <td>{{ $bill->volume }} MC</td>
-                                    <td>{{ $bill->origin }}</td>
-                                    <td>{{ $bill->destination }}</td>
-                                    <td>{{ $bill->statusCode }}</td>
-                                    <td>{{ $bill->published }}</td>
-                                    <td>{{ $bill->author_name }}</td>
+                                    <td>{{ $bill['pieces'] }}</td>
+                                    <td>{{ $bill['weight'] }} KG</td>
+                                    <td>{{ $bill['volume'] }} MC</td>
+                                    <td>{{ $bill['origin'] }}</td>
+                                    <td>{{ $bill['destination'] }}</td>
+                                    <td>{{ $bill['statusCode'] }}</td>
+                                    <td>{{ $bill['published'] }}</td>
+                                    <td>{{ $bill['author_name'] }}</td>
                                     <td>
-                                        <a href="{{ route('backend.acceptance.details', [$bill->airWaybill]) }}">view
+                                        <a href="{{ route('backend.acceptance.details', [$bill['airWaybill']]) }}">view
                                             details</a> |
                                         <a style="color:#8b0000;" href="#">update request</a>
                                     </td>
