@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('signees', function (Blueprint $table) {
             $table->string('staff_no')->after('signature')->nullable();
-            $table->string('desgination')->after('signature')->nullable();
+            $table->string('designation')->after('signature')->nullable();
             $table->integer('roleid')->after('signature')->nullable();
         });
     }

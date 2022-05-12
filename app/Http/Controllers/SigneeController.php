@@ -31,13 +31,14 @@ class SigneeController extends Controller
             $data['signature'] = env('DO_URL').'/'.$path;
         }
 
+        // $url = 'http://localhost:9000/api/v1/signees/store';
         $url = $this->routePath.'/signees/store';
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'X-Requested-With' => 'XMLHttpRequest'
         ])->post($url, $data);
 
-        // dd($response->json());
+        dd($response->json());
 
         if($response->json()['success']['passed'] == 0) {
             $request->session()->flash('alert-danger', 'Error processing');
