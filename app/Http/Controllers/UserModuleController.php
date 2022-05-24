@@ -32,7 +32,7 @@ class UserModuleController extends Controller
         $data = $request->validate([
             'name' => 'required', 'email' => 'required',
             'telephone' => '', 'role' => 'required', 'staffid' => '',
-            'active' => 'required', 'password' => 'required'
+            'active' => 'required', 'password' => 'required', 'username' => 'required'
         ]);
 
         $url = $this->routePath.'/users/store';
@@ -62,7 +62,7 @@ class UserModuleController extends Controller
         $data = $request->validate([
             'name' => 'required', 'email' => 'required',
             'telephone' => '', 'role' => 'required', 'staffid' => '',
-            'active' => 'required', 'password' => ''
+            'active' => 'required', 'password' => '', 'username' => 'required'
         ]);
         $data['userid'] = $user->id;
 

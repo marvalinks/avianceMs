@@ -20,6 +20,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">staffID</th>
+                                <th scope="col">username</th>
                                 <th scope="col">name</th>
                                 <th scope="col">email</th>
                                 <th scope="col">telephone</th>
@@ -32,6 +33,7 @@
                             @forelse ($users as $user)
                                 <tr>
                                     <td>{{ $user['staffid'] ?? 'NO ID' }}</td>
+                                    <td>{{ $user['username'] ?? '' }}</td>
                                     <td>{{ $user['name'] }}</td>
                                     <td>{{ $user['email'] }}</td>
                                     <td>{{ $user['telephone'] ?? '-' }}</td>

@@ -60,6 +60,13 @@
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
+                            <label class="form-label">Username <span class="span-red">*</span></label>
+                            <input type="text" name="username" required class="form-control flatpickr-input"
+                                value="{{ $user->username ?? '' }}">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
                             <label class="form-label">Active <span class="span-red">*</span></label>
                             <select required name="active" id="" class="form-control">
                                 <option value="">-choose-</option>

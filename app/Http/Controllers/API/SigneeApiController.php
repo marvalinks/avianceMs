@@ -68,9 +68,14 @@ class SigneeApiController extends Controller
     }
     public function index(Request $request)
     {
-        $users = Signee::latest()->paginate(50);
+        $users = Signee::query();
+        $aa = $users->where('roleid', 1)->latest()->paginate(100);
+        $as = $users->where('roleid', 2)->latest()->paginate(100);
+        $sa = $users->where('roleid', 3)->latest()->paginate(100);
         $success['passed'] =  1;
-        $success['users'] =  $users;
+        $success['aa'] =  $aa;
+        $success['as'] =  $as;
+        $success['sa'] =  $sa;
         return response()->json(['success' => $success], $this->successStatus);
     }
     public function update(Request $request)

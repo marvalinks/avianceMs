@@ -2,19 +2,19 @@
     <div class="row">
         <div class="col-md-4">
             <div class="mb-3">
-                <label class="form-label">Choose Signing Agent</label>
+                <label class="form-label">Choose Aviance Agent</label>
                 <select wire:model="agentid" required class="form-control" name="signee" {{$sbm ? 'disabled' : ''}}>
                     <option value="">-choose-</option>
-                    @foreach ($agents as $agent)
-                        <option value="{{ $agent['userid'] }}">
-                            {{ $agent['name'] }}</option>
+                    @foreach ($aa as $agent)
+                        <option value="{{ $aa['userid'] }}">
+                            {{ $aa['name'] }}</option>
                     @endforeach
                 </select>
             </div>
         </div>
         <div class="col-md-4">
             <div class="mb-3">
-                <label class="form-label">Agent Passcode</label>
+                <label class="form-label">Aviance Agent Passcode</label>
                 <input type="password" wire:model="passcode" class="form-control flatpickr-input"
                     placeholder="passcode" {{$sbm ? 'disabled' : ''}}>
             </div>

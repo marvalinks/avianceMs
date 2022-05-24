@@ -54,8 +54,8 @@
                                                 <span class="input-group-text">
                                                     <i class="icon-dual" data-feather="mail"></i>
                                                 </span>
-                                                <input required type="email" name="email" class="form-control"
-                                                    id="email" placeholder="user@aviance.com">
+                                                <input required type="text" name="username" class="form-control"
+                                                    id="email" placeholder="username">
                                             </div>
                                         </div>
 

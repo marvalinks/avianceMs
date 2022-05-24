@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -20,11 +21,13 @@ class AuthenticationController extends Controller
     public function postLogin(Request $request)
     {
         $data = $request->validate([
-            'email' => 'required:email', 'password' => 'required'
+            'username' => 'required', 'password' => 'required'
         ]);
 
+        $email = User::where('username', $data['username'])->first()->email;
+
         if(env('APP_ENV') == 'production'){
-            if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            if (Auth::attempt(['email' => $email, 'password' => $request->password])) {
                 $request->session()->regenerate();
                 return redirect()->route('backend.dashboard');
             }
@@ -38,7 +41,7 @@ class AuthenticationController extends Controller
             'Content-Type' => 'application/json',
             'X-Requested-With' => 'XMLHttpRequest'
         ])->post($url, [
-            'email' => $data['email'],
+            'username' => $data['username'],
             'password' => $data['password'],
         ]);
         if($response->json()['success']['passed'] == 0) {

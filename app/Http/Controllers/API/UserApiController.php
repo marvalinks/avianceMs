@@ -19,9 +19,9 @@ class UserApiController extends Controller
     public function loginUser(Request $request)
     {
         $data = $request->validate([
-            'email' => 'required', 'password' => 'required',
+            'username' => 'required', 'password' => 'required',
         ]);
-        $user = User::where('email', $data['email'])->first();
+        $user = User::where('username', $data['username'])->first();
         if(!$user) {
             $success['passed'] =  0;
             $success['message'] =  "User not found!";
@@ -45,7 +45,7 @@ class UserApiController extends Controller
             'password' => $request->password,
             'name' => $request->name, 'email' => $request->email, 'active' => $request->active,
             'telephone' => $request->telephone ?? null, 'staffid' => $request->staffid ?? null,
-            'role' => $request->role
+            'role' => $request->role, 'username' => $request->username
         ];
 
         
@@ -79,7 +79,7 @@ class UserApiController extends Controller
         $data = [
             'name' => $request->name, 'email' => $request->email, 'active' => $request->active,
             'telephone' => $request->telephone ?? null, 'staffid' => $request->staffid ?? null,
-            'role' => $request->role, 'password' => $request->password
+            'role' => $request->role, 'password' => $request->password, 'username' => $request->username
         ];
 
         if (intval($data['role']) == intval(1)) {

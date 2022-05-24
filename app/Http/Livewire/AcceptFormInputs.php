@@ -14,6 +14,10 @@ class AcceptFormInputs extends Component
     public $sbm = false;
     public $err = false;
 
+    public $aa;
+    public $as;
+    public $sa;
+
     protected $routePath = "http://159.223.238.21/api/v1";
 
     public function mount()
@@ -25,7 +29,9 @@ class AcceptFormInputs extends Component
             'X-Requested-With' => 'XMLHttpRequest'
         ])->get($url);
 
-        $this->agents = $response->json()['success']['users']['data'];
+        $this->aa = $response->json()['success']['aa']['data'];
+        $this->as = $response->json()['success']['as']['data'];
+        $this->sa = $response->json()['success']['sa']['data'];
     }
     public function sign()
     {
