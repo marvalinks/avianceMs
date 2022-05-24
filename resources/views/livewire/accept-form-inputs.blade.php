@@ -6,8 +6,8 @@
                 <select wire:model="agentid" required class="form-control" name="signee" {{$sbm ? 'disabled' : ''}}>
                     <option value="">-choose-</option>
                     @foreach ($aa as $agent)
-                        <option value="{{ $aa['userid'] }}">
-                            {{ $aa['name'] }}</option>
+                        <option value="{{ $agent['userid'] }}">
+                            {{ $agent['name'] }}</option>
                     @endforeach
                 </select>
             </div>

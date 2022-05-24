@@ -56,6 +56,8 @@ class SigneeController extends Controller
             'X-Requested-With' => 'XMLHttpRequest'
         ])->get($url);
 
+        dd($response->json()['success']);
+
         $users = $response->json()['success']['users']['data'];
         return view('backend.pages.signees.index', compact('users'));
     }

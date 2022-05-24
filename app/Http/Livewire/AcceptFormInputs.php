@@ -23,7 +23,7 @@ class AcceptFormInputs extends Component
     public function mount()
     {
         // $this->agents = Signee::latest()->get();
-        $url = $this->routePath.'/signees';
+        $url = $this->routePath.'/signees/in';
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'X-Requested-With' => 'XMLHttpRequest'
