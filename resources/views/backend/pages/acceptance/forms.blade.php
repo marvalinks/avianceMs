@@ -127,7 +127,7 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label class="form-label">volume(MC)</label>
-                                <input type="text" name="volume" class="form-control flatpickr-input" placeholder="volume">
+                                <input type="text" value="0" name="volume" class="form-control flatpickr-input" placeholder="volume">
                             </div>
                         </div>
                         <div class="col-md-4">

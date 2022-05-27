@@ -22,6 +22,7 @@ class SigneeController extends Controller
             'name' => 'required', 'passcode' => 'required',
             'signature' => 'required', 'roleid' => 'required',
             'staff_no' => 'required',
+            'signature' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
         ]);
 
         // dd($data); 
@@ -31,14 +32,14 @@ class SigneeController extends Controller
             $data['signature'] = env('DO_URL').'/'.$path;
         }
 
-        $url = 'http://localhost:9000/api/v1/signees/store';
+        $url = $this->routePath.'/signees/store';
         // $url = $this->routePath.'/signees/store';
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'X-Requested-With' => 'XMLHttpRequest'
         ])->post($url, $data);
 
-        dd($response->json());
+        // dd($response->json());
 
         if($response->json()['success']['passed'] == 0) {
             $request->session()->flash('alert-danger', 'Error processing');
@@ -56,7 +57,7 @@ class SigneeController extends Controller
             'X-Requested-With' => 'XMLHttpRequest'
         ])->get($url);
 
-        dd($response->json()['success']);
+        // dd($response->json()['success']);
 
         $users = $response->json()['success']['users']['data'];
         return view('backend.pages.signees.index', compact('users'));

@@ -24,9 +24,9 @@ class AuthenticationController extends Controller
             'username' => 'required', 'password' => 'required'
         ]);
 
-        $email = User::where('username', $data['username'])->first()->email;
-
+        
         if(env('APP_ENV') == 'production'){
+            $email = User::where('username', $data['username'])->first()->email;
             if (Auth::attempt(['email' => $email, 'password' => $request->password])) {
                 $request->session()->regenerate();
                 return redirect()->route('backend.dashboard');
