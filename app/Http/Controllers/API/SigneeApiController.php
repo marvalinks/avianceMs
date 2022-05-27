@@ -75,10 +75,9 @@ class SigneeApiController extends Controller
     }
     public function indexapi(Request $request)
     {
-        $users = Signee::query();
-        $aa = $users->where('roleid', 1)->latest()->paginate(100);
-        $as = $users->where('roleid', 2)->latest()->paginate(100);
-        $sa = $users->where('roleid', 3)->latest()->paginate(100);
+        $aa = Signee::where('roleid', 1)->latest()->paginate(100);
+        $as = Signee::where('roleid', 2)->latest()->paginate(100);
+        $sa = Signee::where('roleid', 3)->latest()->paginate(100);
         $success['passed'] =  1;
         $success['aa'] =  $aa;
         $success['as'] =  $as;
