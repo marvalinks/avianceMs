@@ -23,7 +23,13 @@ class AcceptanceModuleController extends Controller
 
     public function __construct()
     {
-        $configurations = ConfigurationModule::first();
+        $url = $this->routePath.'/configurations';
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'X-Requested-With' => 'XMLHttpRequest'
+        ])->get($url);
+        dd($response->json());
+        $configurations = $response->json()['success']['bills']['data'];
         if(!$configurations) {
             redirect()->route('backend.configurations.index')->send();
         }

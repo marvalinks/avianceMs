@@ -32,6 +32,9 @@ Route::group(['prefix' => 'v1', 'middleware' => []], function () {
         Route::post('store', [UserApiController::class, 'store']);
         Route::post('update', [UserApiController::class, 'update']);
     });
+    Route::group(['prefix' => 'configurations', 'middleware' => []], function () {
+        Route::get('', [AcceptanceApiController::class, 'configurations']);
+    });
     Route::group(['prefix' => 'signees', 'middleware' => []], function () {
         Route::get('', [SigneeApiController::class, 'index']);
         Route::get('in', [SigneeApiController::class, 'indexapi']);

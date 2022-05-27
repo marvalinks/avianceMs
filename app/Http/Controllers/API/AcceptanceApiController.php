@@ -31,6 +31,17 @@ class AcceptanceApiController extends Controller
         }
         $this->configurations = $configurations;
     }
+    public function configurations()
+    {
+        $configurations = ConfigurationModule::first();
+        if(!$configurations) {
+            $success['passed'] =  0;
+            return response()->json(['success' => $success], $this->successStatus);
+        }
+        $configurations = $configurations;
+        $success['passed'] =  1;
+        return response()->json(['success' => $success], $this->successStatus);
+    }
 
 
     public function postWeight(Request $request)
