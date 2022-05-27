@@ -28,11 +28,12 @@ class AcceptanceModuleController extends Controller
             'Content-Type' => 'application/json',
             'X-Requested-With' => 'XMLHttpRequest'
         ])->get($url);
-        dd($response->json());
-        $configurations = $response->json()['success']['bills']['data'];
-        if(!$configurations) {
+        
+        
+        if($response->json()['success']['passed'] == 0) {
             redirect()->route('backend.configurations.index')->send();
         }
+        $configurations = $response->json()['success']['configurations'];
         $this->configurations = $configurations;
     }
 
