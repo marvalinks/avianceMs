@@ -37,9 +37,10 @@ class AcceptanceApiController extends Controller
         if(!$configurations) {
             $success['passed'] =  0;
             return response()->json(['success' => $success], $this->successStatus);
+        }else{
+            $success['passed'] =  1;
+            $success['configurations'] = $configurations;
         }
-        $success['configurations'] = $configurations;
-        $success['passed'] =  1;
         return response()->json(['success' => $success], $this->successStatus);
     }
 
