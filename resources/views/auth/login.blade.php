@@ -49,7 +49,7 @@
                                         @endif
                                         @csrf
                                         <div class="mb-3">
-                                            <label class="form-label">Email Address</label>
+                                            <label class="form-label">Username</label>
                                             <div class="input-group">
                                                 <span class="input-group-text">
                                                     <i class="icon-dual" data-feather="mail"></i>

@@ -21,18 +21,21 @@ class AcceptanceModuleController extends Controller
     // protected $routePath = "http://localhost:9000/api/v1";
     public $configurations;
 
-    public function __construct()
+    public function fetchCongifurations()
     {
         $url = $this->routePath.'/configurations';
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'X-Requested-With' => 'XMLHttpRequest'
         ])->get($url);
+
+        // dd($response->json()['success']['passed']);
         
         
         if($response->json()['success']['passed'] == 0) {
             redirect()->route('backend.configurations.index')->send();
         }
+
         $configurations = $response->json()['success']['configurations'];
         $this->configurations = $configurations;
     }
@@ -40,6 +43,7 @@ class AcceptanceModuleController extends Controller
     public function index(Request $request)
     {
         // $bills = AcceptancePool::latest()->paginate(250);
+        $this->fetchCongifurations();
         $url = $this->routePath.'/acceptance';
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
@@ -58,6 +62,8 @@ class AcceptanceModuleController extends Controller
     public function create(Request $request)
     {
 
+        $this->fetchCongifurations();
+
         $url = $this->routePath.'/requirements';
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
@@ -75,6 +81,7 @@ class AcceptanceModuleController extends Controller
 
     public function edit(Request $request, $id)
     {
+        $this->fetchCongifurations();
         $code = $this->stationCode;
         $acc = AcceptancePool::findOrFail($id);
         return view('backend.pages.acceptance.edit', compact('code', 'acc'));
@@ -82,6 +89,7 @@ class AcceptanceModuleController extends Controller
 
     public function submitForms(Request $request)
     {
+        $this->fetchCongifurations();
         dd($request->all());
         $data = $request->validate([
             'prefix' => 'required', 'serial' => 'required', 'originCode' => 'required',

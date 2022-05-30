@@ -8,7 +8,7 @@
     <div class="row">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('backend.users.edit', [$user->id]) }}" autocomplete="on" class="row mtop-30"
+                <form action="{{ route('backend.users.edit', [$user->id]) }}" autocomplete="off" class="row mtop-30"
                     method="post">
                     @csrf
                     <div class="col-md-12">

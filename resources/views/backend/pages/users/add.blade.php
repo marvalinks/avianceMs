@@ -8,7 +8,7 @@
     <div class="row">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('backend.users.create') }}" autocomplete="on" class="row mtop-30" method="post">
+                <form action="{{ route('backend.users.create') }}" autocomplete="off" class="row mtop-30" method="post">
                     @csrf
                     <div class="col-md-12">
                         <p class="sub-header">User info</p>
