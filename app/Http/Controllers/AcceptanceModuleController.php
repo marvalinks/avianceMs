@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Redirect;
 class AcceptanceModuleController extends Controller
 {
 
-    // protected $cargoKey = 'RoPgFWG3Pv2ymLF19VyHuGVfUnluDo3x';
-    protected $cargoKey = 'iNNa2ZZDikD7IYLrfvyfqVd5en5vN5cN';
+    protected $cargoKey = 'RoPgFWG3Pv2ymLF19VyHuGVfUnluDo3x';
+    // protected $cargoKey = 'iNNa2ZZDikD7IYLrfvyfqVd5en5vN5cN';
     protected $stationCode = 'ACC';
     protected $routePath = "http://159.223.238.21/api/v1";
     // protected $routePath = "http://localhost:9000/api/v1";
