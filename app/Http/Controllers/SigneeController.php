@@ -64,7 +64,12 @@ class SigneeController extends Controller
     }
     public function edit(Request $request, $id)
     {
-        $user = Signee::where('userid', $id)->first();
+        $url = $this->routePath.'/signees/edit/'.$id;
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'X-Requested-With' => 'XMLHttpRequest'
+        ])->get($url);
+        $user = $response->json()['success']['user'];
         return view('backend.pages.signees.edit', compact('user'));
     }
     public function update(Request $request, $id)

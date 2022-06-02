@@ -84,6 +84,17 @@ class SigneeApiController extends Controller
         $success['sa'] =  $sa;
         return response()->json(['success' => $success], $this->successStatus);
     }
+    public function edit(Request $request, $id) 
+    {
+        $user = Signee::where('userid', $id)->first();
+        if(!$user) {
+            $success['passed'] =  0;
+            return response()->json(['success' => $success], $this->successStatus);
+        }
+        $success['passed'] =  1;
+        $success['user'] =  $user;
+        return response()->json(['success' => $success], $this->successStatus);
+    }
     public function update(Request $request)
     {
         $user = Signee::where('userid', $request->userid)->first();
