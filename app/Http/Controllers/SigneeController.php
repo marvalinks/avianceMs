@@ -69,7 +69,7 @@ class SigneeController extends Controller
             'Content-Type' => 'application/json',
             'X-Requested-With' => 'XMLHttpRequest'
         ])->get($url);
-        dd($url, $response->json());
+        // dd($url, $response->json());
         $user = $response->json()['success']['user'];
         return view('backend.pages.signees.edit', compact('user'));
     }
