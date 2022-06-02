@@ -132,7 +132,9 @@ class AcceptanceApiController extends Controller
 
         $curl = curl_init();
 
-        $reqURL = $this->configurations->apiPath."/acceptance-requests";
+
+        $reqURL = "https://api-gateway-dev.champ.aero/csp/acceptance/v1/airwaybills/acceptance-requests";
+        // $reqURL = $this->configurations->apiPath."/acceptance-requests";
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => $reqURL,
@@ -140,8 +142,8 @@ class AcceptanceApiController extends Controller
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => json_encode($bb),
             CURLOPT_HTTPHEADER => [
-                'Apikey: ' . $this->configurations->apiKey,
-                'Stationcode: ' . $this->configurations->stationCode,
+                'Apikey: ' . $this->cargoKey,
+                'Stationcode: ' . $this->stationCode,
                 "content-type: application/json",
                 "cache-control: no-cache"
             ],
@@ -164,7 +166,18 @@ class AcceptanceApiController extends Controller
             return response()->json(['success' => $success], $this->successStatus);
         }
         if ($httpcode == 201) {
-            $this->getAirwayBill($airwayBill, $data['author_name'], $data['author_id']);
+            // $this->getAirwayBill($airwayBill, $data['author_name'], $data['author_id']);
+            $bill = AcceptancePool::create([
+                'airWaybill' =>  $airwayBill,
+                'pieces' =>  intval($data['pieces']),
+                'weight' =>  intval($data['weight']),
+                'volume' =>  intval($data['volume']),
+                'origin' =>  $this->stationCode,
+                'destination' =>  $data['destinationCode'],
+                'statusCode' =>  "200",
+                'author_name' =>  $data['author_name'],
+                'author_id' =>  $data['author_id']
+            ]);
 
             $success['passed'] =  1;
             return response()->json(['success' => $success], $this->successStatus);
@@ -177,7 +190,8 @@ class AcceptanceApiController extends Controller
     protected function getAirwayBill($bill,$name, $id)
     {
         $curl = curl_init();
-        $reqURL = $this->configurations->apiPath;
+        $reqURL = "https://api-gateway-dev.champ.aero/csp/acceptance/v1/airwaybills";
+        // $reqURL = $this->configurations->apiPath;
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => $reqURL . '/' . $bill,
@@ -186,7 +200,7 @@ class AcceptanceApiController extends Controller
             CURLOPT_POSTFIELDS => [],
             CURLOPT_HTTPHEADER => [
                 'Apikey: ' . $this->configurations->apiKey,
-                'Stationcode: ' . $this->configurations->stationCode,
+                'Stationcode: ' . $this->stationCode,
                 "content-type: application/json",
                 "cache-control: no-cache"
             ],
