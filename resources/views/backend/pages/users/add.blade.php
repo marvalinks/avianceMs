@@ -21,8 +21,8 @@
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label class="form-label">Email <span class="span-red">*</span></label>
-                            <input type="text" required name="email" class="form-control flatpickr-input"
+                            <label class="form-label">Email</label>
+                            <input type="text" name="email" class="form-control flatpickr-input"
                                 placeholder="Email">
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                     <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label">Choose password <span class="span-red">*</span></label>
-                            <input type="text" required name="password" class="form-control flatpickr-input"
+                            <input type="password" required name="password" class="form-control flatpickr-input"
                                 placeholder="password">
                         </div>
                     </div>

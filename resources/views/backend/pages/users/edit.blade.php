@@ -23,8 +23,8 @@
                     </div>
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label class="form-label">Email <span class="span-red">*</span></label>
-                            <input type="text" required name="email" class="form-control flatpickr-input"
+                            <label class="form-label">Email</label>
+                            <input type="text" name="email" class="form-control flatpickr-input"
                                 value="{{ $user->email }}">
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                     <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label">Change password </label>
-                            <input type="text" name="password" class="form-control flatpickr-input" value="Change password">
+                            <input type="password" name="password" class="form-control flatpickr-input" value="Change password">
                         </div>
                     </div>
                     <div class="col-md-4">

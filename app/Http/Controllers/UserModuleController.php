@@ -30,7 +30,7 @@ class UserModuleController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required', 'email' => 'required',
+            'name' => 'required', 'email' => '',
             'telephone' => '', 'role' => 'required', 'staffid' => '',
             'active' => 'required', 'password' => 'required', 'username' => 'required'
         ]);
@@ -60,7 +60,7 @@ class UserModuleController extends Controller
     {
         $user = User::findOrFail($id);
         $data = $request->validate([
-            'name' => 'required', 'email' => 'required',
+            'name' => 'required', 'email' => '',
             'telephone' => '', 'role' => 'required', 'staffid' => '',
             'active' => 'required', 'password' => '', 'username' => 'required'
         ]);

@@ -43,7 +43,7 @@ class UserApiController extends Controller
 
         $data = [
             'password' => $request->password,
-            'name' => $request->name, 'email' => $request->email, 'active' => $request->active,
+            'name' => $request->name, 'email' => $request->email ?? null, 'active' => $request->active,
             'telephone' => $request->telephone ?? null, 'staffid' => $request->staffid ?? null,
             'role' => $request->role, 'username' => $request->username
         ];
@@ -77,7 +77,7 @@ class UserApiController extends Controller
     {
         $user = User::findOrFail($request->userid);
         $data = [
-            'name' => $request->name, 'email' => $request->email, 'active' => $request->active,
+            'name' => $request->name, 'email' => $request->email ?? null, 'active' => $request->active,
             'telephone' => $request->telephone ?? null, 'staffid' => $request->staffid ?? null,
             'role' => $request->role, 'password' => $request->password, 'username' => $request->username
         ];
