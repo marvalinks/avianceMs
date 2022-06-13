@@ -176,7 +176,10 @@ class AcceptanceApiController extends Controller
                 'destination' =>  $data['destinationCode'],
                 'statusCode' =>  "200",
                 'author_name' =>  $data['author_name'],
-                'author_id' =>  $data['author_id']
+                'author_id' =>  $data['author_id'],
+                'shipper_agent' =>  $data['shipper_agent'],
+                'aviance_security' =>  $data['aviance_security'],
+                'aviance_agent' =>  $data['aviance_agent']
             ]);
 
             $success['passed'] =  1;

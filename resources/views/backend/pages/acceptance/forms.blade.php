@@ -47,10 +47,15 @@
             <div class="card-body">
                 <form action="{{ route('backend.acceptance.create') }}" autocomplete="on" class="row mtop-30 accform"
                     method="post">
-                    @if ($errors->any())
-                    @foreach ($errors->all() as $error)
-                    <div class="clred">{{$error}}</div>
-                    @endforeach
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                            <ul>
+                            @foreach ($errors->all() as $error)
+                                <li class="clred">{{ $error }}</li>
+                            @endforeach
+                            </ul>
+                        </div>
                     @endif
                     @csrf
                     <div class="row">
@@ -88,7 +93,7 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label class="form-label">serial <span class="span-red">*</span></label>
-                                <input required type="text" name="serial" class="form-control flatpickr-input"
+                                <input required type="text" maxlength="8" name="serial" class="form-control flatpickr-input"
                                     placeholder="serial">
                             </div>
                         </div>

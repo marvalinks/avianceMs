@@ -90,7 +90,7 @@ class AcceptanceModuleController extends Controller
     public function submitForms(Request $request)
     {
         $this->fetchCongifurations();
-        dd($request->all());
+        // dd($request->all());
         $data = $request->validate([
             'prefix' => 'required', 'serial' => 'required', 'originCode' => 'required',
             'destinationCode' => 'required', 'pieces' => 'required', 'natureOfGoods' => '', 'weight' => 'required',
@@ -98,6 +98,7 @@ class AcceptanceModuleController extends Controller
             'blockedForManifesting' => '', 'aviance_agent' => 'required', 'aviance_security' => 'required',
             'shipper_agent' => 'required'
         ]);
+        // ddd($data);
 
         $data['author_name'] = session()->get('user')['name'];
         $data['author_id'] = session()->get('user')['id'];
