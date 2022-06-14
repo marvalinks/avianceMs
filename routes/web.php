@@ -67,6 +67,7 @@ if(env('APP_ENV') == 'production') {
             Route::post('create', [AcceptanceModuleController::class, 'submitForms'])->name('create');
             Route::get('edit', [AcceptanceModuleController::class, 'edit'])->name('edit');
             Route::get('export', [AcceptanceModuleController::class, 'export'])->name('export');
+            Route::get('generate-pdf/{id}', [AcceptanceModuleController::class, 'generatePDF'])->name('generate.pdf');
         });
     
         Route::group(['prefix' => 'users', 'as' => 'users.', 'middleware' => ['adminAccess']], function () {

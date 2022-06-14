@@ -26,7 +26,11 @@ Route::group(['prefix' => 'v1', 'middleware' => []], function () {
     Route::get('requirements', [AcceptanceApiController::class, 'getRequirements']);
     Route::get('acceptance', [AcceptanceApiController::class, 'index']);
     Route::post('acceptance-request', [AcceptanceApiController::class, 'acceptanceRequest']);
+    
 
+    Route::group(['prefix' => 'acceptance', 'middleware' => []], function () {
+        Route::get('details/{id}', [AcceptanceApiController::class, 'acceptanceDetails']);
+    });
     Route::group(['prefix' => 'users', 'middleware' => []], function () {
         Route::get('', [UserApiController::class, 'index']);
         Route::post('store', [UserApiController::class, 'store']);

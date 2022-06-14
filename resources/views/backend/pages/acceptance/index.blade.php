@@ -67,12 +67,10 @@
                                     <td>{{ $bill['origin'] }}</td>
                                     <td>{{ $bill['destination'] }}</td>
                                     <td>{{ $bill['statusCode'] }}</td>
-                                    <td>{{ $bill['created_at'] }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($bill['created_at'])->toFormattedDateString() }}</td>
                                     <td>{{ $bill['author_name'] }}</td>
                                     <td>
-                                        <a href="{{ route('backend.acceptance.details', [$bill['airWaybill']]) }}">view
-                                            details</a> |
-                                        <a style="color:#8b0000;" href="#">update request</a>
+                                        <a href="{{route('backend.acceptance.generate.pdf', [$bill['airWaybill']]) }}">print pdf</a>
                                     </td>
                                 </tr>
                             @empty

@@ -18,4 +18,17 @@ class AcceptancePool extends Model
             get: fn ($value) => Carbon::parse($this->created_at)->toFormattedDateString(),
         );
     }
+
+    public function agent()
+    {
+        return $this->belongsTo(Signee::class, 'aviance_agent', 'userid');
+    }
+    public function shipper()
+    {
+        return $this->belongsTo(Signee::class, 'aviance_security', 'userid');
+    }
+    public function security()
+    {
+        return $this->belongsTo(Signee::class, 'shipper_agent', 'userid');
+    }
 }
