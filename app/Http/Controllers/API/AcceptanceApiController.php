@@ -300,9 +300,9 @@ class AcceptanceApiController extends Controller
         $output = $pdf->save(storage_path('pdfs/'.$name.'.pdf'));
         dd(storage_path('pdfs/'.$name.'.pdf'));
 
-        $success['passed'] =  1;
-        $success['path'] =  $path;
-        return response()->json(['success' => $success], $this->successStatus);
+        // $success['passed'] =  1;
+        // $success['path'] =  $path;
+        // return response()->json(['success' => $success], $this->successStatus);
         
         // return $pdf->download('airway.pdf');
     }
