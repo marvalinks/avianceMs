@@ -25,6 +25,7 @@ $(document).ready(function () {
     //Buttons examples
     var table = $("#datatable-buttons").DataTable({
         lengthChange: false,
+        ordering: false,
         buttons: ["copy", "print", "pdfHtml5"],
         language: {
             paginate: {

@@ -30,7 +30,7 @@ class AcceptanceModuleController extends Controller
             'X-Requested-With' => 'XMLHttpRequest'
         ])->get($url);
 
-        // dd($response->json()['success']['passed']);
+        // dd($response->json());
         
         
         if($response->json()['success']['passed'] == 0) {
