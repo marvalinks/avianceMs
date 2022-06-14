@@ -201,12 +201,13 @@ class AcceptanceModuleController extends Controller
             $request->session()->flash('alert-danger', 'Error loading acceptance request...');
             return back();
         }
-dd($url2);
+// dd($url2);
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'X-Requested-With' => 'XMLHttpRequest'
         ])->get($url2);
-        dd($response);
+        // dd($response);
+        return $response->json();
 
         // $bill = $response->json()['success']['bill'];
 

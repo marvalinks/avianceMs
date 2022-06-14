@@ -11,6 +11,7 @@ use App\Models\WeightLog;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AcceptanceApiController extends Controller
@@ -295,7 +296,14 @@ class AcceptanceApiController extends Controller
         ->setOption('javascript-delay', 1000)
         ->setTimeout(120);
 
-        return $pdf->download('airway.pdf');
-        // return view('backend.pages.pdfs.airwaybill');
+        $name = mt_rand(10000, 9999999999999);
+        $output = $pdf->save(storage_path('pdfs/'.$name.'.pdf'));
+        dd(storage_path('pdfs/'.$name.'.pdf'));
+
+        $success['passed'] =  1;
+        $success['path'] =  $path;
+        return response()->json(['success' => $success], $this->successStatus);
+        
+        // return $pdf->download('airway.pdf');
     }
 }
