@@ -169,11 +169,11 @@
     <div class="row p56 dflex o9p" style="margin-top: 10px;">
         <div class="span6 dflex">
             <h4>Date:</h4>
-            <input type="text" style="width: 150px;">
+            <input type="text" style="width: 150px;" value="{{\Carbon\Carbon::parse($bill['created_at'])->toFormattedDateString()}}">
         </div>
         <div class="span6 dflex">
             <h4>Flight No.:</h4>
-            <input type="text" style="width: 150px;" id="">
+            <input type="text" style="width: 150px;" value="{{$bill['flight_no' ?? 'N/A']}}">
         </div>
         <div class="span6 dflex">
             <h4>Sheet.:</h4>
@@ -186,7 +186,7 @@
     <div class="row p56 dflex o9p op4">
         <div class="span6 dflex" style="width: 100%;">
             <h4>Airwaybill No::</h4>
-            <input type="text" name="" id="" style="width: 600px;">
+            <input type="text" name="" id="" style="width: 600px;" value="{{$bill['airWaybill']}}">
         </div>
     </div>
     
@@ -207,10 +207,18 @@
                 </tr>
             </thead>
             <tbody role="alert" aria-live="polite" aria-relevant="all">
-                
+                <tr>
+                    <td>{{$bill['uld_option']}}</td>
+                    <td>kg</td>
+                    <td>{{$bill['pieces']}}</td>
+                    <td>{{number_format($bill['weight'], 2)}}</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>{{number_format($bill['weight'], 2)}}</td>
+                </tr>
             </tbody>
             <tfoot>
-                @for ($i=0; $i< 9; $i++)
+                @for ($i=0; $i< 5; $i++)
                     
                 <tr class="gradeX even">
                     @for ($j=0; $j< 7; $j++)

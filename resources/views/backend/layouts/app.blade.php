@@ -150,14 +150,14 @@
                                     </a>
 
                                 </li>
-                                <li class="nav-item ">
+                                {{-- <li class="nav-item ">
                                     <a class="nav-link" href="{{ route('backend.configurations.index') }}"
                                         id="topnav-layout" role="button" data-bs-toggle="" aria-haspopup="true"
                                         aria-expanded="false">
                                         <i data-feather="home"></i> Configurations
                                     </a>
 
-                                </li>
+                                </li> --}}
                             @endif
                         </ul>
                     </div>
