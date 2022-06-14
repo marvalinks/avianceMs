@@ -10,6 +10,7 @@ use App\Models\HandlingCode;
 use App\Models\WeightLog;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -297,12 +298,16 @@ class AcceptanceApiController extends Controller
         ->setTimeout(120);
 
         $name = mt_rand(10000, 9999999999999);
-        $output = $pdf->save(storage_path('pdfs/'.$name.'.pdf'));
-        dd(storage_path('pdfs/'.$name.'.pdf'));
+        $pdf->save(storage_path('pdfs/'.$name.'.pdf'));
+        
+        $doc = storage_path('pdfs/' . $name. '.pdf');
+        $file = new UploadedFile($doc, 'file');
+        // dd($file);
+        $dfd = Storage::disk('do')->put('pdfs', $file, 'public');
 
-        // $success['passed'] =  1;
-        // $success['path'] =  $path;
-        // return response()->json(['success' => $success], $this->successStatus);
+        $success['passed'] =  1;
+        $success['path'] =  env('DO_URL').'/'.$dfd;
+        return response()->json(['success' => $success], $this->successStatus);
         
         // return $pdf->download('airway.pdf');
     }
