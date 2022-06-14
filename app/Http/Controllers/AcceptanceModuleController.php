@@ -187,6 +187,15 @@ class AcceptanceModuleController extends Controller
 
     public function generatePDF(Request $request, $id)
     {
+        $url = $this->routePath.'/acceptance/details/'.$id;
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'X-Requested-With' => 'XMLHttpRequest'
+        ])->get($url);
+    }
+
+    public function generatePDF2(Request $request, $id)
+    {
 
         // $url = 'http://localhost:8001/api/v1/acceptance/details/'.$id;
         // dd($url);
@@ -201,7 +210,7 @@ class AcceptanceModuleController extends Controller
             $request->session()->flash('alert-danger', 'Error loading acceptance request...');
             return back();
         }
-dd($url2);
+// dd($url2);
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'X-Requested-With' => 'XMLHttpRequest'

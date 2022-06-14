@@ -200,6 +200,35 @@ class AcceptanceApiController extends Controller
                 'flight_no' => $data['flight_no'],
                 'uld_option' =>  $data['uld_option'],
             ]);
+            if($bill) {
+                $bill2 = AcceptancePool::with(['shipper', 'agent', 'security'])->where('airWaybill', $airwayBill)->first();
+                $pdf = SnappyPdf::loadView('backend.pages.pdfs.airwaybill', ['bill' => $bill2]);
+
+                $orientation = 'portrait';
+                $paper = 'A4';
+                $pdf->setOrientation($orientation)
+                ->setOption('page-size', $paper)
+                ->setOption('margin-bottom', '0mm')
+                ->setOption('margin-top', '8.7mm')
+                ->setOption('margin-right', '0mm')
+                ->setOption('margin-left', '0mm')
+                ->setOption('enable-javascript', true)
+                ->setOption('no-stop-slow-scripts', true)
+                ->setOption('enable-smart-shrinking', true)
+                ->setOption('javascript-delay', 1000)
+                ->setTimeout(120);
+
+                $name = mt_rand(10000, 9999999999999);
+                $pdf->save(storage_path('pdfs/'.$name.'.pdf'));
+                
+                $doc = storage_path('pdfs/' . $name. '.pdf');
+                $file = new UploadedFile($doc, 'file');
+                // dd($file);
+                $dfd = Storage::disk('do')->put('pdfs', $file, 'public');
+
+                $bill2->pdf_path = env('DO_URL').'/'.$dfd;
+                $bill2->save();
+            }
 
             $success['passed'] =  1;
             return response()->json(['success' => $success], $this->successStatus);
@@ -304,6 +333,9 @@ class AcceptanceApiController extends Controller
         $file = new UploadedFile($doc, 'file');
         // dd($file);
         $dfd = Storage::disk('do')->put('pdfs', $file, 'public');
+
+        $bill->pdf_path = env('DO_URL').'/'.$dfd;
+        $bill->save();
 
         $success['passed'] =  1;
         $success['path'] =  env('DO_URL').'/'.$dfd;
