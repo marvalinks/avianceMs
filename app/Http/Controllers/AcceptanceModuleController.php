@@ -215,7 +215,7 @@ class AcceptanceModuleController extends Controller
             'Content-Type' => 'application/json',
             'X-Requested-With' => 'XMLHttpRequest'
         ])->get($url2);
-        // dd($response);
+        dd($response->json());
         return $response->json();
 
         // $bill = $response->json()['success']['bill'];

@@ -70,7 +70,7 @@
                                     <td>{{ \Carbon\Carbon::parse($bill['created_at'])->toFormattedDateString() }}</td>
                                     <td>{{ $bill['author_name'] }}</td>
                                     <td>
-                                        <a href="{{route('backend.acceptance.generate.pdf', [$bill['airWaybill']]) }}">print pdf</a>
+                                        <a target="_blank" href="{{ $bill['pdf_path'] }}">print pdf</a>
                                     </td>
                                 </tr>
                             @empty
