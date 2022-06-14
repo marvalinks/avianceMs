@@ -169,11 +169,11 @@
     <div class="row p56 dflex o9p" style="margin-top: 10px;">
         <div class="span6 dflex">
             <h4>Date:</h4>
-            <input type="text" style="width: 150px;" value="{{\Carbon\Carbon::parse($bill->created_at)->toFormattedDateString()}}">
+            <input type="text" style="width: 150px;" value="{{\Carbon\Carbon::parse($bill['created_at'])->toFormattedDateString()}}">
         </div>
         <div class="span6 dflex">
             <h4>Flight No.:</h4>
-            <input type="text" style="width: 150px;" value="{{$bill->flight_no ?? 'N/A'}}">
+            <input type="text" style="width: 150px;" value="{{$bill['flight_no' ?? 'N/A']}}">
         </div>
         <div class="span6 dflex">
             <h4>Sheet.:</h4>
@@ -186,7 +186,7 @@
     <div class="row p56 dflex o9p op4">
         <div class="span6 dflex" style="width: 100%;">
             <h4>Airwaybill No::</h4>
-            <input type="text" name="" id="" style="width: 600px;" value="{{$bill->airWaybill}}">
+            <input type="text" name="" id="" style="width: 600px;" value="{{$bill['airWaybill']}}">
         </div>
     </div>
     
@@ -208,13 +208,13 @@
             </thead>
             <tbody role="alert" aria-live="polite" aria-relevant="all">
                 <tr>
-                    <td>{{$bill->uld_option}}</td>
+                    <td>{{$bill['uld_option']}}</td>
                     <td>kg</td>
-                    <td>{{$bill->pieces}}</td>
-                    <td>{{number_format($bill->weight, 2)}}</td>
+                    <td>{{$bill['pieces']}}</td>
+                    <td>{{number_format($bill['weight'], 2)}}</td>
                     <td>-</td>
                     <td>-</td>
-                    <td>{{number_format($bill->weight, 2)}}</td>
+                    <td>{{number_format($bill['weight'], 2)}}</td>
                 </tr>
             </tbody>
             <tfoot>
@@ -274,19 +274,19 @@
             <ul style="list-style-type: none;">
                 <li class="dflex mb15">
                     <p class="gstrong">Aviance Agent Name: </p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">{{$bill->agent->name}}</span>
+                    <span class="tdeco">{{$bill['agent']['name']}}</span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Signature: </p>&nbsp;&nbsp;&nbsp;
-                    <span><img class="signn" src="{{$bill->agent->signature}}" alt=""></span>
+                    <span><img class="signn" src="{{$bill['agent']['signature']}}" alt=""></span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Staff No. :</p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">{{$bill->agent->staff_no ?? ''}}</span>
+                    <span class="tdeco">{{$bill['agent']['staff_no'] ?? ''}}</span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Date: </p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">{{\Carbon\Carbon::parse($bill->created_at)->toFormattedDateString()}}</span>
+                    <span class="tdeco">{{\Carbon\Carbon::parse($bill['created_at'])->toFormattedDateString()}}</span>
                 </li>
             </ul>
         </div>
@@ -294,19 +294,19 @@
             <ul style="list-style-type: none;">
                 <li class="dflex mb15">
                     <p class="gstrong">Aviance Security Agent Name</p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">{{$bill->security->name}}</span>
+                    <span class="tdeco">{{$bill['security']['name']}}</span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Signature</p>&nbsp;&nbsp;&nbsp;
-                    <span><img class="signn" src="{{$bill->security->signature}}" alt=""></span>
+                    <span><img class="signn" src="{{$bill['security']['signature']}}" alt=""></span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Staff No.</p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">{{$bill->security->staff_no ?? ''}}</span>
+                    <span class="tdeco">{{$bill['security']['staff_no'] ?? ''}}</span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Date</p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">{{\Carbon\Carbon::parse($bill->created_at)->toFormattedDateString()}}</span>
+                    <span class="tdeco">{{\Carbon\Carbon::parse($bill['created_at'])->toFormattedDateString()}}</span>
                 </li>
             </ul>
         </div>
@@ -316,19 +316,19 @@
             <ul style="list-style-type: none;">
                 <li class="dflex mb15">
                     <p class="gstrong">Shipping Agent Name</p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">{{$bill->shipper->name}}</span>
+                    <span class="tdeco">{{$bill['shipper']['name']}}</span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Signature</p>&nbsp;&nbsp;&nbsp;
-                    <span><img class="signn" src="{{$bill->shipper->signature}}" alt=""></span>
+                    <span><img class="signn" src="{{$bill['shipper']['signature']}}" alt=""></span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Staff No.</p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">{{$bill->shipper->staff_no ?? ''}}</span>
+                    <span class="tdeco">{{$bill['shipper']['staff_no'] ?? ''}}</span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Date</p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">{{\Carbon\Carbon::parse($bill->created_at)->toFormattedDateString()}}</span>
+                    <span class="tdeco">{{\Carbon\Carbon::parse($bill['created_at'])->toFormattedDateString()}}</span>
                 </li>
             </ul>
         </div>

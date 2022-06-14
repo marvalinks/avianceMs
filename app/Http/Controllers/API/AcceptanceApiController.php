@@ -265,13 +265,19 @@ class AcceptanceApiController extends Controller
         // $url = 'http://localhost:8001/api/v1/acceptance/details/'.$id;
         // dd($url);
         $url = $this->routePath.'/acceptance/details/'.$id;
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'X-Requested-With' => 'XMLHttpRequest'
-        ])->get($url);
+        // $response = Http::withHeaders([
+        //     'Content-Type' => 'application/json',
+        //     'X-Requested-With' => 'XMLHttpRequest'
+        // ])->get($url);
 
-        $bill = $response->json()['success']['bill'];
+        // dd($response->json());
+        // $bill = $response->json()['success']['bill'];
 
+        $bill = AcceptancePool::with(['shipper', 'agent', 'security'])->where('airWaybill', $id)->first();
+
+        // $aa = SnappyPdf::loadHTML('<h1>hello</h1>');
+        // return $aa->download('airway.pdf');
+        // dd($bill);
 
         $pdf = SnappyPdf::loadView('backend.pages.pdfs.airwaybill', ['bill' => $bill]);
 
