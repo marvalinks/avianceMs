@@ -8,7 +8,9 @@ use App\Models\Airline;
 use App\Models\ConfigurationModule;
 use App\Models\HandlingCode;
 use App\Models\WeightLog;
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class AcceptanceApiController extends Controller
@@ -255,5 +257,39 @@ class AcceptanceApiController extends Controller
                 ]);
             }
         }
+    }
+
+    public function generatePDF(Request $request, $id)
+    {
+
+        // $url = 'http://localhost:8001/api/v1/acceptance/details/'.$id;
+        // dd($url);
+        $url = $this->routePath.'/acceptance/details/'.$id;
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'X-Requested-With' => 'XMLHttpRequest'
+        ])->get($url);
+
+        $bill = $response->json()['success']['bill'];
+
+
+        $pdf = SnappyPdf::loadView('backend.pages.pdfs.airwaybill', ['bill' => $bill]);
+
+        $orientation = 'portrait';
+        $paper = 'A4';
+        $pdf->setOrientation($orientation)
+        ->setOption('page-size', $paper)
+        ->setOption('margin-bottom', '0mm')
+        ->setOption('margin-top', '8.7mm')
+        ->setOption('margin-right', '0mm')
+        ->setOption('margin-left', '0mm')
+        ->setOption('enable-javascript', true)
+        ->setOption('no-stop-slow-scripts', true)
+        ->setOption('enable-smart-shrinking', true)
+        ->setOption('javascript-delay', 1000)
+        ->setTimeout(120);
+
+        return $pdf->download('airway.pdf');
+        // return view('backend.pages.pdfs.airwaybill');
     }
 }

@@ -191,36 +191,42 @@ class AcceptanceModuleController extends Controller
         // $url = 'http://localhost:8001/api/v1/acceptance/details/'.$id;
         // dd($url);
         $url = $this->routePath.'/acceptance/details/'.$id;
+        $url2 = $this->routePath.'/acceptance/generatepdf/'.$id;
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'X-Requested-With' => 'XMLHttpRequest'
         ])->get($url);
-
+        
         if($response->json()['success']['passed'] == 0) {
             $request->session()->flash('alert-danger', 'Error loading acceptance request...');
             return back();
         }
 
-        $bill = $response->json()['success']['bill'];
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'X-Requested-With' => 'XMLHttpRequest'
+        ])->get($url2);
+
+        // $bill = $response->json()['success']['bill'];
 
 
-        $pdf = SnappyPdf::loadView('backend.pages.pdfs.airwaybill', ['bill' => $bill]);
+        // $pdf = SnappyPdf::loadView('backend.pages.pdfs.airwaybill', ['bill' => $bill]);
 
-        $orientation = 'portrait';
-        $paper = 'A4';
-        $pdf->setOrientation($orientation)
-        ->setOption('page-size', $paper)
-        ->setOption('margin-bottom', '0mm')
-        ->setOption('margin-top', '8.7mm')
-        ->setOption('margin-right', '0mm')
-        ->setOption('margin-left', '0mm')
-        ->setOption('enable-javascript', true)
-        ->setOption('no-stop-slow-scripts', true)
-        ->setOption('enable-smart-shrinking', true)
-        ->setOption('javascript-delay', 1000)
-        ->setTimeout(120);
+        // $orientation = 'portrait';
+        // $paper = 'A4';
+        // $pdf->setOrientation($orientation)
+        // ->setOption('page-size', $paper)
+        // ->setOption('margin-bottom', '0mm')
+        // ->setOption('margin-top', '8.7mm')
+        // ->setOption('margin-right', '0mm')
+        // ->setOption('margin-left', '0mm')
+        // ->setOption('enable-javascript', true)
+        // ->setOption('no-stop-slow-scripts', true)
+        // ->setOption('enable-smart-shrinking', true)
+        // ->setOption('javascript-delay', 1000)
+        // ->setTimeout(120);
 
-        return $pdf->inline();
+        // return $pdf->inline();
         // return view('backend.pages.pdfs.airwaybill');
     }
 

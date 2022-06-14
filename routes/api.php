@@ -30,6 +30,7 @@ Route::group(['prefix' => 'v1', 'middleware' => []], function () {
 
     Route::group(['prefix' => 'acceptance', 'middleware' => []], function () {
         Route::get('details/{id}', [AcceptanceApiController::class, 'acceptanceDetails']);
+        Route::get('generatepdf/{id}', [AcceptanceApiController::class, 'generatePDF']);
     });
     Route::group(['prefix' => 'users', 'middleware' => []], function () {
         Route::get('', [UserApiController::class, 'index']);
