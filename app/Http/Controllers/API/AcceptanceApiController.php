@@ -117,7 +117,7 @@ class AcceptanceApiController extends Controller
                 "prefix" => $data['prefix'],
                 "serial" => $data['serial'],
                 "originCode" => $this->configurations->stationCode,
-                "destinationCode" => $data['destinationCode'],
+                "destinationCode" => strtoupper($data['destinationCode']),
                 "pieces" => intval($data['pieces']),
                 "weight" => [
                     "amount" => intval($data['weight']),
@@ -192,7 +192,9 @@ class AcceptanceApiController extends Controller
                 'author_id' =>  $data['author_id'],
                 'shipper_agent' =>  $data['shipper_agent'],
                 'aviance_security' =>  $data['aviance_security'],
-                'aviance_agent' =>  $data['aviance_agent']
+                'aviance_agent' =>  $data['aviance_agent'],
+                'flight_no' => $data['flight_no'],
+                'uld_option' =>  $data['uld_option'],
             ]);
 
             $success['passed'] =  1;
