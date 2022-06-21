@@ -36,6 +36,7 @@ Route::group(['prefix' => 'v1', 'middleware' => []], function () {
         Route::get('', [UserApiController::class, 'index']);
         Route::post('store', [UserApiController::class, 'store']);
         Route::post('update', [UserApiController::class, 'update']);
+        Route::get('find/{id}', [UserApiController::class, 'findUser']);
     });
     Route::group(['prefix' => 'configurations', 'middleware' => []], function () {
         Route::get('', [AcceptanceApiController::class, 'configurations']);

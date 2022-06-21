@@ -100,4 +100,11 @@ class UserApiController extends Controller
         $success['user'] =  $user;
         return response()->json(['success' => $success], $this->successStatus);
     }
+    public function findUser(Request $request, $id)
+    {
+        $user = User::where('userid', $id)->first();
+        $success['passed'] =  1;
+        $success['user'] =  $user;
+        return response()->json(['success' => $success], $this->successStatus);
+    }
 }

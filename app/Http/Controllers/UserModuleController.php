@@ -53,6 +53,12 @@ class UserModuleController extends Controller
     }
     public function edit(Request $request, $id)
     {
+        $url = $this->routePath.'/users/find/'.$id;
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'X-Requested-With' => 'XMLHttpRequest'
+        ])->get($url);
+        dd($response->json());
         $user = User::findOrFail($id);
         return view('backend.pages.users.edit', compact('user'));
     }
