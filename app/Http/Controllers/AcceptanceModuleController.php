@@ -97,7 +97,7 @@ class AcceptanceModuleController extends Controller
             'destinationCode' => 'required', 'pieces' => 'required', 'natureOfGoods' => '', 'weight' => 'required',
             'volume' => '', 'specialHandlingCodes' => '', 'securityStatus' => '', 'x-ray' => '', 'remarks' => '',
             'blockedForManifesting' => '', 'aviance_agent' => 'required', 'aviance_security' => 'required',
-            'shipper_agent' => 'required', 'uld_option' => 'required', 'flight_no' => 'required'
+            'shipper_agent' => 'required', 'uld_option' => 'required', 'flight_no' => 'required', 'uld_number' => ''
         ]);
         // ddd($data);
 

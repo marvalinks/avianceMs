@@ -208,7 +208,7 @@
             </thead>
             <tbody role="alert" aria-live="polite" aria-relevant="all">
                 <tr>
-                    <td>{{$bill->uld_option}}</td>
+                    <td>{{$bill->uld_number ?? $bill->uld_option}}</td>
                     <td>kg</td>
                     <td>{{$bill->pieces}}</td>
                     <td>{{number_format($bill->weight, 2)}}</td>
@@ -239,7 +239,7 @@
                     <th>Length (cm)</th>
                     <th>Width (cm)</th>
                     <th>Height (cm)</th>
-                    <th>Volume (&#13221;)</th>
+                    <th>Volume (m<sup>3</sup> )</th>
 
                 </tr>
             </thead>
@@ -255,7 +255,7 @@
                 <tr>
                     <td></td>
                     <td></td>
-                    <td class="r4r4 gstrong">Total Volume (&#13221;)</td>
+                    <td class="r4r4 gstrong">Total Volume (m<sup>3</sup> )</td>
                     <td class="r4r4 gstrong"></td>
                 </tr>
             </tbody>
@@ -264,7 +264,7 @@
         </table>
     </div>
     <div class="row p56 dflex">
-        <h4 class="gstrong">Calculation - Length (cm) x Width (cm) x Height (cm) &#247; 1,000,000 = &#13221;</h4>
+        <h4 class="gstrong">Calculation - Length (cm) x Width (cm) x Height (cm) &#247; 1,000,000 = m<sup>3</sup> </h4>
     </div>
     <div class="row p56">
         <p>I, the undersigned confirm that the cargo built into the ULD's listed above have been checked weighed on calibrated scales and recorded.</p>

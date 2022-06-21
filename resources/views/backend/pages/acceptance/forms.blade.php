@@ -104,22 +104,8 @@
                                     placeholder="originCode" value="{{ $code }}">
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label class="form-label">Flight No <span class="span-red">*</span></label>
-                                <input required type="text" name="flight_no" class="form-control flatpickr-input"
-                                    placeholder="Flight No">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label class="form-label">ULD Option <span class="span-red">*</span></label>
-                                <select required name="uld_option" id="" class="form-control">
-                                    <option value="bulk">Bulk</option>
-                                    <option value="uld">ULD number</option>
-                                </select>
-                            </div>
-                        </div>
+                        
+                        @livewire('select-uld')
                         
                         <div class=" col-md-4">
                             <div class="mb-3">
