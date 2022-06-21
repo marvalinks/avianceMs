@@ -75,7 +75,7 @@ class UserApiController extends Controller
     }
     public function update(Request $request)
     {
-        $user = User::findOrFail($request->userid);
+        $user = User::where('userid', $request->userid)->first();
         $data = [
             'name' => $request->name, 'email' => $request->email ?? null, 'active' => $request->active,
             'telephone' => $request->telephone ?? null, 'staffid' => $request->staffid ?? null,

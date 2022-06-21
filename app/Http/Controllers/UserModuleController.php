@@ -58,19 +58,24 @@ class UserModuleController extends Controller
             'Content-Type' => 'application/json',
             'X-Requested-With' => 'XMLHttpRequest'
         ])->get($url);
-        dd($response->json());
-        $user = User::findOrFail($id);
+        $user = $response->json()['success']['user'];
+        // dd($user);
         return view('backend.pages.users.edit', compact('user'));
     }
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        $url2 = $this->routePath.'/users/find/'.$id;
+        $response2 = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'X-Requested-With' => 'XMLHttpRequest'
+        ])->get($url2);
+        $user = $response2->json()['success']['user'];
         $data = $request->validate([
             'name' => 'required', 'email' => '',
             'telephone' => '', 'role' => 'required', 'staffid' => '',
             'active' => 'required', 'password' => '', 'username' => 'required'
         ]);
-        $data['userid'] = $user->id;
+        $data['userid'] = $user['userid'];
 
         $url = $this->routePath.'/users/update';
         $response = Http::withHeaders([

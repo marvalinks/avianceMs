@@ -43,7 +43,7 @@
                                             {{ $user['active'] ? 'online' : 'offline' }}</div>
                                     </td>
                                     <td>
-                                        <a href="{{ route('backend.users.edit', [$user['id']]) }}">edit user</a>
+                                        <a href="{{ route('backend.users.edit', [$user['userid'] ?? $user['id']]) }}">edit user</a>
                                     </td>
                                 </tr>
                             @empty
