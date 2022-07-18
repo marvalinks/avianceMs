@@ -20,8 +20,8 @@ class AcceptanceApiController extends Controller
     public $successStatus = 200;
 
 
-    // protected $cargoKey = 'iNNa2ZZDikD7IYLrfvyfqVd5en5vN5cN';
-    protected $cargoKey = 'RoPgFWG3Pv2ymLF19VyHuGVfUnluDo3x';
+    protected $cargoKey = 'iNNa2ZZDikD7IYLrfvyfqVd5en5vN5cN';
+    // protected $cargoKey = 'RoPgFWG3Pv2ymLF19VyHuGVfUnluDo3x';
     protected $stationCode = 'ACC';
     protected $routePath = "http://159.223.238.21/api/v1";
     // protected $routePath = "http://localhost:9000/api/v1";
@@ -150,7 +150,8 @@ class AcceptanceApiController extends Controller
         $curl = curl_init();
 
 
-        $reqURL = "https://api-gateway-dev.champ.aero/csp/acceptance/v1/airwaybills/acceptance-requests";
+        // $reqURL = "https://api-gateway-dev.champ.aero/csp/acceptance/v1/airwaybills/acceptance-requests";
+        $reqURL = "https://api-gateway.champ.aero/csp/acceptance/v1/airwaybills";
         // $reqURL = $this->configurations->apiPath."/acceptance-requests";
 
         curl_setopt_array($curl, array(
@@ -194,42 +195,41 @@ class AcceptanceApiController extends Controller
                 'statusCode' =>  "200",
                 'author_name' =>  $data['author_name'],
                 'author_id' =>  $data['author_id'],
-                'shipper_agent' =>  $data['shipper_agent'],
-                'aviance_security' =>  $data['aviance_security'],
-                'aviance_agent' =>  $data['aviance_agent'],
+                'shipper_agent' =>  $data['shipper_agent'] ?? null,
+                'aviance_security' =>  $data['aviance_security'] ?? null,
+                'aviance_agent' =>  $data['aviance_agent'] ?? null,
                 'flight_no' => $data['flight_no'],
                 'uld_option' =>  $data['uld_option'],
                 'uld_number' =>  $data['uld_number'],
             ]);
-            if($bill) {
-                $bill2 = AcceptancePool::with(['shipper', 'agent', 'security'])->where('airWaybill', $airwayBill)->first();
-                $pdf = SnappyPdf::loadView('backend.pages.pdfs.airwaybill', ['bill' => $bill2]);
+            // if($bill) {
+            //     $bill2 = AcceptancePool::with(['shipper', 'agent', 'security'])->where('airWaybill', $airwayBill)->first();
+            //     $pdf = SnappyPdf::loadView('backend.pages.pdfs.airwaybill', ['bill' => $bill2]);
 
-                $orientation = 'portrait';
-                $paper = 'A4';
-                $pdf->setOrientation($orientation)
-                ->setOption('page-size', $paper)
-                ->setOption('margin-bottom', '0mm')
-                ->setOption('margin-top', '8.7mm')
-                ->setOption('margin-right', '0mm')
-                ->setOption('margin-left', '0mm')
-                ->setOption('enable-javascript', true)
-                ->setOption('no-stop-slow-scripts', true)
-                ->setOption('enable-smart-shrinking', true)
-                ->setOption('javascript-delay', 1000)
-                ->setTimeout(120);
+            //     $orientation = 'portrait';
+            //     $paper = 'A4';
+            //     $pdf->setOrientation($orientation)
+            //     ->setOption('page-size', $paper)
+            //     ->setOption('margin-bottom', '0mm')
+            //     ->setOption('margin-top', '8.7mm')
+            //     ->setOption('margin-right', '0mm')
+            //     ->setOption('margin-left', '0mm')
+            //     ->setOption('enable-javascript', true)
+            //     ->setOption('no-stop-slow-scripts', true)
+            //     ->setOption('enable-smart-shrinking', true)
+            //     ->setOption('javascript-delay', 1000)
+            //     ->setTimeout(120);
 
-                $name = mt_rand(10000, 9999999999999);
-                $pdf->save(storage_path('pdfs/'.$name.'.pdf'));
+            //     $name = mt_rand(10000, 9999999999999);
+            //     $pdf->save(storage_path('pdfs/'.$name.'.pdf'));
                 
-                $doc = storage_path('pdfs/' . $name. '.pdf');
-                $file = new UploadedFile($doc, 'file');
-                // dd($file);
-                $dfd = Storage::disk('do')->put('pdfs', $file, 'public');
+            //     $doc = storage_path('pdfs/' . $name. '.pdf');
+            //     $file = new UploadedFile($doc, 'file');
+            //     $dfd = Storage::disk('do')->put('pdfs', $file, 'public');
 
-                $bill2->pdf_path = env('DO_URL').'/'.$dfd;
-                $bill2->save();
-            }
+            //     $bill2->pdf_path = env('DO_URL').'/'.$dfd;
+            //     $bill2->save();
+            // }
 
             $success['passed'] =  1;
             return response()->json(['success' => $success], $this->successStatus);

@@ -69,9 +69,9 @@
                                     <td>{{ $bill['statusCode'] }}</td>
                                     <td>{{ \Carbon\Carbon::parse($bill['created_at'])->toFormattedDateString() }}</td>
                                     <td>{{ $bill['author_name'] }}</td>
-                                    <td>
+                                    {{-- <td>
                                         <a target="_blank" href="{{ $bill['pdf_path'] }}">print pdf</a>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @empty
                                 <tr>

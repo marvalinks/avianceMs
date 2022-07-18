@@ -186,7 +186,14 @@
                         </div>
 
                     </div>
-                    @livewire('accept-form-inputs')
+                    {{-- @livewire('accept-form-inputs') --}}
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-secondary submit-btn">Save & Submit</button>
+                        </div>
+                    </div>
                 </form>
 
             </div>
