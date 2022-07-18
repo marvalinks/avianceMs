@@ -29,12 +29,12 @@ class AcceptanceApiController extends Controller
 
     public function __construct()
     {
-        $configurations = ConfigurationModule::first();
-        if(!$configurations) {
-            $success['passed'] =  0;
-            return response()->json(['success' => $success], $this->successStatus);
-        }
-        $this->configurations = $configurations;
+        // $configurations = ConfigurationModule::first();
+        // if(!$configurations) {
+        //     $success['passed'] =  0;
+        //     return response()->json(['success' => $success], $this->successStatus);
+        // }
+        // $this->configurations = $configurations;
     }
     public function configurations()
     {
@@ -195,9 +195,9 @@ class AcceptanceApiController extends Controller
                 'statusCode' =>  "200",
                 'author_name' =>  $data['author_name'],
                 'author_id' =>  $data['author_id'],
-                'shipper_agent' =>  $data['shipper_agent'] ?? null,
-                'aviance_security' =>  $data['aviance_security'] ?? null,
-                'aviance_agent' =>  $data['aviance_agent'] ?? null,
+                // 'shipper_agent' =>  $data['shipper_agent'] ?? null,
+                // 'aviance_security' =>  $data['aviance_security'] ?? null,
+                // 'aviance_agent' =>  $data['aviance_agent'] ?? null,
                 'flight_no' => $data['flight_no'],
                 'uld_option' =>  $data['uld_option'],
                 'uld_number' =>  $data['uld_number'],
