@@ -199,8 +199,8 @@ class AcceptanceApiController extends Controller
                 // 'aviance_security' =>  $data['aviance_security'] ?? null,
                 // 'aviance_agent' =>  $data['aviance_agent'] ?? null,
                 'flight_no' => $data['flight_no'],
-                'uld_option' =>  $data['uld_option'],
-                'uld_number' =>  $data['uld_number'] ?? null,
+                'uld_option' =>  $data['uld_option'] ?? null,
+                // 'uld_number' =>  $data['uld_number'] ?? null,
             ]);
             // if($bill) {
             //     $bill2 = AcceptancePool::with(['shipper', 'agent', 'security'])->where('airWaybill', $airwayBill)->first();
