@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Redirect;
 class AcceptanceModuleController extends Controller
 {
 
-    protected $cargoKey = 'RoPgFWG3Pv2ymLF19VyHuGVfUnluDo3x';
-    // protected $cargoKey = 'iNNa2ZZDikD7IYLrfvyfqVd5en5vN5cN';
+    // protected $cargoKey = 'RoPgFWG3Pv2ymLF19VyHuGVfUnluDo3x';
+    protected $cargoKey = 'iNNa2ZZDikD7IYLrfvyfqVd5en5vN5cN';
     protected $stationCode = 'ACC';
     protected $routePath = "http://159.223.238.21/api/v1";
     // protected $routePath = "http://localhost:9000/api/v1";
@@ -99,10 +99,10 @@ class AcceptanceModuleController extends Controller
             'blockedForManifesting' => '', 'aviance_agent' => '', 'aviance_security' => '',
             'shipper_agent' => '', 'uld_option' => 'required', 'flight_no' => 'required', 'uld_number' => ''
         ]);
-        // ddd($data);
-
+        
         $data['author_name'] = session()->get('user')['name'];
         $data['author_id'] = session()->get('user')['id'];
+        // dd($data);
 
         // dd($data);
 
@@ -110,6 +110,8 @@ class AcceptanceModuleController extends Controller
             $request->session()->flash('alert-danger', 'Incorrect weight scale readings..');
             return back();
         }
+
+        // $this->acceptanceRequest($data);
 
         $url = $this->routePath.'/acceptance-request';
         $response = Http::withHeaders([
@@ -126,6 +128,117 @@ class AcceptanceModuleController extends Controller
         return back();
 
         $tranx = json_decode($response, true);
+    }
+
+    public function acceptanceRequest($data)
+    {
+
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+
+        // dd($data['prefix']);
+
+        // $success['passed'] =  1;
+        // $success['data'] =  $data;
+        // return response()->json(['success' => $success], $this->successStatus);
+
+        $SecKey = $this->cargoKey;
+        $airwayBill = $data['prefix'] . '-' . $data['serial'];
+        
+
+        $bb = array(
+            "airWaybill" => [
+                "prefix" => $data['prefix'],
+                "serial" => $data['serial'],
+                "originCode" => $this->stationCode,
+                "destinationCode" => strtoupper($data['destinationCode']),
+                "pieces" => intval($data['pieces']),
+                "weight" => [
+                    "amount" => intval($data['weight']),
+                    "unit" => "KG"
+                ],
+                "natureOfGoods" => $data['natureOfGoods'] ?? null
+            ],
+            "part" => [
+                "pieces" => intval($data['pieces']),
+                "weight" => [
+                    "amount" => intval($data['weight']),
+                    "unit" => "KG"
+                ],
+                "volume" => [
+                    "amount" => intval($data['volume']),
+                    "unit" => "MC"
+                ],
+                "specialHandlingCodes" => $data['specialHandlingCodes'],
+                "securityStatus" => $data['securityStatus'],
+                "x-ray" => intval($data['x-ray']) == 1 ? true : false,
+                "remarks" => $data['remarks'],
+                "blockedForManifesting" => intval($data['blockedForManifesting']) == 1 ? true : false
+            ]
+        );
+
+        // dd($bb);
+
+        $curl = curl_init();
+
+
+        // $reqURL = "https://api-gateway-dev.champ.aero/csp/acceptance/v1/airwaybills/acceptance-requests";
+        $reqURL = "https://api-gateway.champ.aero/csp/acceptance/v1/airwaybills/acceptance-requests";
+        // $reqURL = $this->configurations->apiPath."/acceptance-requests";
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $reqURL,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($bb),
+            CURLOPT_HTTPHEADER => [
+                'Apikey: ' . $this->cargoKey,
+                'Stationcode: ' . $this->stationCode,
+                "content-type: application/json",
+                "cache-control: no-cache"
+            ],
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+        if ($err) {
+            die('Curl returned error: ' . $err);
+        }
+
+        dd($response, $httpcode);
+
+
+
+        if ($httpcode == 422) {
+            $success['passed'] =  0;
+            return response()->json(['success' => $success], $this->successStatus);
+        }
+        if ($httpcode == 201) {
+            // $this->getAirwayBill($airwayBill, $data['author_name'], $data['author_id']);
+            $bill = AcceptancePool::create([
+                'airWaybill' =>  $airwayBill,
+                'pieces' =>  intval($data['pieces']),
+                'weight' =>  intval($data['weight']),
+                'volume' =>  intval($data['volume']),
+                'origin' =>  $this->stationCode,
+                'destination' =>  $data['destinationCode'],
+                'statusCode' =>  "200",
+                'author_name' =>  $data['author_name'],
+                'author_id' =>  $data['author_id'],
+                'shipper_agent' =>  $data['shipper_agent'] ?? null,
+                'aviance_security' =>  $data['aviance_security'] ?? null,
+                'aviance_agent' =>  $data['aviance_agent'] ?? null,
+                'flight_no' => $data['flight_no'],
+                'uld_option' =>  $data['uld_option'],
+                'uld_number' =>  $data['uld_number'],
+            ]);
+            dd($bill);
+        }
+
+        $success['passed'] =  0;
+        return response()->json(['success' => $success], $this->successStatus);
     }
 
     protected function getAirwayBill($bill, $persit)

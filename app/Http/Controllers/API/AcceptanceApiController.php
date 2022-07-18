@@ -120,7 +120,7 @@ class AcceptanceApiController extends Controller
             "airWaybill" => [
                 "prefix" => $data['prefix'],
                 "serial" => $data['serial'],
-                "originCode" => $this->configurations->stationCode,
+                "originCode" => $this->stationCode,
                 "destinationCode" => strtoupper($data['destinationCode']),
                 "pieces" => intval($data['pieces']),
                 "weight" => [
@@ -151,7 +151,7 @@ class AcceptanceApiController extends Controller
 
 
         // $reqURL = "https://api-gateway-dev.champ.aero/csp/acceptance/v1/airwaybills/acceptance-requests";
-        $reqURL = "https://api-gateway.champ.aero/csp/acceptance/v1/airwaybills";
+        $reqURL = "https://api-gateway.champ.aero/csp/acceptance/v1/airwaybills/acceptance-requests";
         // $reqURL = $this->configurations->apiPath."/acceptance-requests";
 
         curl_setopt_array($curl, array(
