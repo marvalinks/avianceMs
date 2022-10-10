@@ -6,6 +6,7 @@
                 <label class="form-label">weight(KG) <span class="span-red">*</span></label>
                 <input required type="text" wire:model="weight" readonly name="weight"
                     class="form-control flatpickr-input" placeholder="weight">
+                    <small><a href="{{route('wscale')}}" target="_blank">Open weight reading tab</a></small>
             </div>
         </div>
         <div class="col-md-4"></div>

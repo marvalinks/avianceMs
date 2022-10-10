@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->route('login');
 });
+Route::get('weight-scale', [AcceptanceModuleController::class, 'scale'])->name('wscale');
 Route::get('login', [AuthenticationController::class, 'login'])->name('login');
 Route::post('login', [AuthenticationController::class, 'postLogin'])->name('login');
 
@@ -38,6 +39,7 @@ if(env('APP_ENV') == 'production') {
             Route::post('create', [AcceptanceModuleController::class, 'submitForms'])->name('create');
             Route::get('edit', [AcceptanceModuleController::class, 'edit'])->name('edit');
             Route::get('export', [AcceptanceModuleController::class, 'export'])->name('export');
+            
         });
     
         Route::group(['prefix' => 'users', 'as' => 'users.', 'middleware' => ['adminAccess']], function () {

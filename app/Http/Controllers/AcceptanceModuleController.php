@@ -323,7 +323,6 @@ class AcceptanceModuleController extends Controller
             $request->session()->flash('alert-danger', 'Error loading acceptance request...');
             return back();
         }
-// dd($url2);
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'X-Requested-With' => 'XMLHttpRequest'
@@ -354,6 +353,10 @@ class AcceptanceModuleController extends Controller
         // return view('backend.pages.pdfs.airwaybill');
     }
 
+    public function scale(Request $request) 
+    {
+        return view('backend.pages.acceptance.scale');
+    }
     public function export(Request $request)
     {
         dd('io');

@@ -17,6 +17,7 @@ class WeightReading extends Component
 
     public function mount()
     {
+        session(['weight' => 0]);
         // $this->testPythonScript();
     }
 
@@ -38,9 +39,11 @@ class WeightReading extends Component
         if (trim($result) == trim("error")) {
             $this->weight = 0;
             $this->color = "danger";
+            session(['weight' => 0]);
         } else {
             $this->weight = $result;
             $this->color = "success";
+            session(['weight' => $result]);
         }
     }
 }
