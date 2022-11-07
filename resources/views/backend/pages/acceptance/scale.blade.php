@@ -41,7 +41,7 @@
         .center-screen h4{
             /* font-size: 220px; */
             color: rgb(47, 76, 157);
-            font-size: 61.48px;
+            font-size: 53.48px;
         }
         .lg67{
             width: 100%;
