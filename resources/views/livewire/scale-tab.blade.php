@@ -1,3 +1,6 @@
 <div>
-    <h3>{{$weight}}</h3>
+    <h3>
+        <span>{{$weight}}</span>
+        <sup>KG</sup>
+    </h3>
 </div>
