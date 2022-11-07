@@ -33,15 +33,15 @@
             color: rgb(47, 76, 157);
         }
         .center-screen h3 span{
-            font-size: 581.45px;
+            font-size: 471.05px;
         }
         .center-screen h3 sup{
-            font-size: 122.213px;
+            font-size: 92.213px;
         }
         .center-screen h4{
             /* font-size: 220px; */
             color: rgb(47, 76, 157);
-            font-size: 204.48px;
+            font-size: 154.48px;
         }
         .lg67{
             width: 100%;
