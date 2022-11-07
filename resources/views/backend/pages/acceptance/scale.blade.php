@@ -49,8 +49,9 @@
             margin-bottom: 20px;
         }
         .lg67 img{
-            /* width: 408.96px;
-            height: 134.39px; */
+            height: 58px;
+            margin-top: 10px;
+            margin-right: 10px;
         }
     </style>
 
@@ -58,7 +59,7 @@
 <body>
     <div class="row center-screen">
         <div class="lg67">
-            <img src="/assets/images/aviance.png" alt="" height="24" />
+            <img src="/assets/images/logo.png" alt="" height="24" />
         </div>
         <h4>SCALE No. 2</h4>
         @livewire('scale-tab')
