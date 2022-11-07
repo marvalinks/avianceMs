@@ -33,7 +33,7 @@ class WeightReading extends Component
         // $service = new LaravelPython();
         // $result = $service->run($path . '/weight.py');
         // $result = \Python::run($path . '/weight.py');
-        $result = shell_exec("python " . $path . "/weight.py" . " 2>&1");
+        $result = shell_exec("python3 " . $path . "/weight.py" . " 2>&1");
         
         // dd(trim($result));
         if (trim($result) == trim("error")) {

@@ -33,23 +33,24 @@
             color: rgb(47, 76, 157);
         }
         .center-screen h3 span{
-            font-size: 471.05px;
+            font-size: 370.05px;
         }
         .center-screen h3 sup{
-            font-size: 92.213px;
+            font-size: 70.213px;
         }
         .center-screen h4{
             /* font-size: 220px; */
             color: rgb(47, 76, 157);
-            font-size: 154.48px;
+            font-size: 61.48px;
         }
         .lg67{
             width: 100%;
             text-align: end;
+            margin-bottom: 20px;
         }
         .lg67 img{
-            width: 408.96px;
-            height: 134.39px;
+            /* width: 408.96px;
+            height: 134.39px; */
         }
     </style>
 
@@ -59,8 +60,8 @@
         <div class="lg67">
             <img src="/assets/images/aviance.png" alt="" height="24" />
         </div>
-        @livewire('scale-tab')
         <h4>SCALE No. 2</h4>
+        @livewire('scale-tab')
     </div>
 
     <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
