@@ -25,6 +25,7 @@ Route::group(['prefix' => 'v1', 'middleware' => []], function () {
     Route::post('submit-weight', [AcceptanceApiController::class, 'postWeight']);
     Route::get('requirements', [AcceptanceApiController::class, 'getRequirements']);
     Route::get('acceptance', [AcceptanceApiController::class, 'index']);
+    Route::get('pending-jobs', [AcceptanceApiController::class, 'pendingJobs']);
     Route::post('acceptance-request', [AcceptanceApiController::class, 'acceptanceRequest']);
     
 

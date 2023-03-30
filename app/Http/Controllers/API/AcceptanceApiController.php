@@ -69,7 +69,15 @@ class AcceptanceApiController extends Controller
 
     public function index(Request $request)
     {
-        $bills = AcceptancePool::latest()->paginate(250);
+        $bills = AcceptancePool::where('is_signed', 1)->latest()->paginate(250);
+
+        $success['passed'] =  1;
+        $success['bills'] =  $bills;
+        return response()->json(['success' => $success], $this->successStatus);
+    }
+    public function pendingJobs(Request $request)
+    {
+        $bills = AcceptancePool::where('is_signed', 0)->latest()->paginate(250);
 
         $success['passed'] =  1;
         $success['bills'] =  $bills;

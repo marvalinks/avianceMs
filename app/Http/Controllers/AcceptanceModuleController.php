@@ -91,8 +91,8 @@ class AcceptanceModuleController extends Controller
     public function submitForms(Request $request)
     {
         $this->fetchCongifurations();
-        dd(\Illuminate\Support\Str::random(5));
-        dd($request->all());
+        // dd(\Illuminate\Support\Str::random(5));
+        // dd($request->all());
         $data = $request->validate([
             'prefix' => 'required', 'serial' => 'required', 'originCode' => 'required',
             'destinationCode' => 'required', 'pieces' => 'required', 'natureOfGoods' => '', 'weight' => 'required',
@@ -106,6 +106,7 @@ class AcceptanceModuleController extends Controller
         // dd($data);
 
         // dd($data);
+        // 071-89201843
 
         if (floatval($data['weight']) == floatval(0)) {
             $request->session()->flash('alert-danger', 'Incorrect weight scale readings..');
@@ -125,10 +126,9 @@ class AcceptanceModuleController extends Controller
             return back();
         }
 
+        $tranx = json_decode($response, true);
         $request->session()->flash('alert-success', 'Acceptance form data successfully processed');
         return back();
-
-        $tranx = json_decode($response, true);
     }
 
     public function acceptanceRequest($data)
@@ -363,5 +363,18 @@ class AcceptanceModuleController extends Controller
         dd('io');
         // return Excel::download(new AirbillExport, 'records.xlsx');
         // $pdf = SnappyPdf::loadView('pages.pdfs.payment', []);
+    }
+    public function pendingJobs(Request $request)
+    {
+        $this->fetchCongifurations();
+        $url = $this->routePath.'/pending-jobs';
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'X-Requested-With' => 'XMLHttpRequest'
+        ])->get($url);
+        $bills = $response->json()['success']['bills']['data'];
+        dd($bills);
+        return view('jobs.pending-jobs');
+        
     }
 }
