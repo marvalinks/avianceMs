@@ -58,8 +58,11 @@
                             @forelse ($bills as $bill)
                                 <tr>
                                     <td>
-                                        <a
-                                            href="{{ route('backend.acceptance.details', [$bill['airWaybill']]) }}">{{ $bill['airWaybill'] }}</a>
+                                        @if ($bill['pdf_path'])
+                                        <a target="_blank" href="{{ $bill['pdf_path'] }}">{{ $bill['airWaybill'] }}</a>
+                                        @else
+                                            {{ $bill['airWaybill'] }}
+                                        @endif
                                     </td>
                                     <td>{{ $bill['pieces'] }}</td>
                                     <td>{{ $bill['weight'] }} KG</td>

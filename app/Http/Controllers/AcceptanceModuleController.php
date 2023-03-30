@@ -9,6 +9,7 @@ use App\Models\HandlingCode;
 use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Http\Client\Pool;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -300,7 +301,7 @@ class AcceptanceModuleController extends Controller
         }
     }
 
-    public function generatePDF(Request $request, $id)
+    public function PXX(Request $request, $id)
     {
         $url = $this->routePath.'/acceptance/details/'.$id;
         $response = Http::withHeaders([
@@ -421,6 +422,8 @@ class AcceptanceModuleController extends Controller
         // dd($data);
         $bill->update($data);
 
+        $this->generatePDFPXX($id);
+
         $request->session()->flash('alert-success', 'Signature Processed');
         return redirect()->route('pending.jobs');
     }
@@ -436,9 +439,44 @@ class AcceptanceModuleController extends Controller
                // storing image in storage/app/public Folder
                 //   Storage::disk('public')->put($route.'/' . $file_name,base64_decode($image_64));
             $storage = Storage::disk('do')->put($route.'/'.$file_name, base64_decode($image_64), 'public');
-            return $path;
+            return env('DO_URL').'/'.$path;
 
         }
 
+    }
+    protected function generatePDFPXX($id)
+    {
+
+        $bill = AcceptancePool::where('airWaybill', $id)->first();
+        $pdf = SnappyPdf::loadView('backend.pages.pdfs.airwaybill', ['bill' => $bill]);
+
+        $orientation = 'portrait';
+        $paper = 'A4';
+        $pdf->setOrientation($orientation)
+        ->setOption('page-size', $paper)
+        ->setOption('margin-bottom', '0mm')
+        ->setOption('margin-top', '8.7mm')
+        ->setOption('margin-right', '0mm')
+        ->setOption('margin-left', '0mm')
+        ->setOption('enable-javascript', true)
+        ->setOption('no-stop-slow-scripts', true)
+        ->setOption('enable-smart-shrinking', true)
+        ->setOption('javascript-delay', 1000)
+        ->setTimeout(120);
+
+        $name = mt_rand(10000, 9999999999999);
+        $pdf->save(storage_path('pdfs/'.$name.'.pdf'));
+        
+        $doc = storage_path('pdfs/' . $name. '.pdf');
+        $file = new UploadedFile($doc, 'file');
+        // dd($file);
+        $dfd = Storage::disk('do')->put('pdfs', $file, 'public');
+
+        $bill->pdf_path = env('DO_URL').'/'.$dfd;
+        $bill->save();
+
+        return true;
+        
+        // return $pdf->download('airway.pdf');
     }
 }

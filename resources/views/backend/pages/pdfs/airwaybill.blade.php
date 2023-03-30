@@ -274,15 +274,15 @@
             <ul style="list-style-type: none;">
                 <li class="dflex mb15">
                     <p class="gstrong">Aviance Agent Name: </p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">{{$bill->agent->name}}</span>
+                    <span class="tdeco">{{$bill->aviance_agent}}</span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Signature: </p>&nbsp;&nbsp;&nbsp;
-                    <span><img class="signn" src="{{$bill->agent->signature}}" alt=""></span>
+                    <span><img class="signn" src="{{$bill->aviance_agent_sign}}" alt=""></span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Staff No. :</p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">{{$bill->agent->staff_no ?? ''}}</span>
+                    <span class="tdeco">-</span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Date: </p>&nbsp;&nbsp;&nbsp;
@@ -294,15 +294,15 @@
             <ul style="list-style-type: none;">
                 <li class="dflex mb15">
                     <p class="gstrong">Aviance Security Agent Name</p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">{{$bill->security->name}}</span>
+                    <span class="tdeco">{{$bill->aviance_security}}</span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Signature</p>&nbsp;&nbsp;&nbsp;
-                    <span><img class="signn" src="{{$bill->security->signature}}" alt=""></span>
+                    <span><img class="signn" src="{{$bill->aviance_security_sign}}" alt=""></span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Staff No.</p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">{{$bill->security->staff_no ?? ''}}</span>
+                    <span class="tdeco">-</span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Date</p>&nbsp;&nbsp;&nbsp;
@@ -316,15 +316,15 @@
             <ul style="list-style-type: none;">
                 <li class="dflex mb15">
                     <p class="gstrong">Shipping Agent Name</p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">{{$bill->shipper->name}}</span>
+                    <span class="tdeco">{{$bill->shipper_agent}}</span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Signature</p>&nbsp;&nbsp;&nbsp;
-                    <span><img class="signn" src="{{$bill->shipper->signature}}" alt=""></span>
+                    <span><img class="signn" src="{{$bill->shipper_agent_sign}}" alt=""></span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Staff No.</p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">{{$bill->shipper->staff_no ?? ''}}</span>
+                    <span class="tdeco">-</span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Date</p>&nbsp;&nbsp;&nbsp;

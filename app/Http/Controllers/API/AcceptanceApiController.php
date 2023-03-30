@@ -325,7 +325,7 @@ class AcceptanceApiController extends Controller
         // dd($response->json());
         // $bill = $response->json()['success']['bill'];
 
-        $bill = AcceptancePool::with(['shipper', 'agent', 'security'])->where('airWaybill', $id)->first();
+        $bill = AcceptancePool::where('airWaybill', $id)->first();
 
         // $aa = SnappyPdf::loadHTML('<h1>hello</h1>');
         // return $aa->download('airway.pdf');
