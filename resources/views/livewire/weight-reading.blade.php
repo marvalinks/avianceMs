@@ -4,8 +4,10 @@
         <div class="col-md-4">
             <div class="mb-3">
                 <label class="form-label">weight(KG) <span class="span-red">*</span></label>
-                <input required type="text" wire:model="weight" readonly name="weight"
+                <input required type="text" value="90" readonly name="weight"
                     class="form-control flatpickr-input" placeholder="weight">
+                {{-- <input required type="text" wire:model="weight" readonly name="weight"
+                    class="form-control flatpickr-input" placeholder="weight"> --}}
                     <small><a href="{{route('wscale')}}" target="_blank">Open weight reading tab</a></small>
             </div>
         </div>

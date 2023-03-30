@@ -114,6 +114,8 @@ class AcceptanceApiController extends Controller
 
         $SecKey = $this->cargoKey;
         $airwayBill = $data['prefix'] . '-' . $data['serial'];
+
+        $code = \Illuminate\Support\Str::random(5);
         
 
         $bb = array(
@@ -200,6 +202,7 @@ class AcceptanceApiController extends Controller
                 // 'aviance_agent' =>  $data['aviance_agent'] ?? null,
                 'flight_no' => $data['flight_no'],
                 'uld_option' =>  $data['uld_option'] ?? null,
+                'code' => $code
                 // 'uld_number' =>  $data['uld_number'] ?? null,
             ]);
             // if($bill) {
@@ -232,6 +235,7 @@ class AcceptanceApiController extends Controller
             // }
 
             $success['passed'] =  1;
+            $success['code'] =  $code;
             return response()->json(['success' => $success], $this->successStatus);
         }
 

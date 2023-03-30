@@ -91,7 +91,8 @@ class AcceptanceModuleController extends Controller
     public function submitForms(Request $request)
     {
         $this->fetchCongifurations();
-        // dd($request->all());
+        dd(\Illuminate\Support\Str::random(5));
+        dd($request->all());
         $data = $request->validate([
             'prefix' => 'required', 'serial' => 'required', 'originCode' => 'required',
             'destinationCode' => 'required', 'pieces' => 'required', 'natureOfGoods' => '', 'weight' => 'required',
