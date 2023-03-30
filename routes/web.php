@@ -31,6 +31,7 @@ Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout'
 if(env('APP_ENV') == 'production') {
     Route::get('pending-jobs', [AcceptanceModuleController::class, 'pendingJobs'])->name('pending.jobs');
     Route::get('open-jobs/{id}', [AcceptanceModuleController::class, 'openJobs'])->name('open.jobs');
+    Route::post('open-jobs/{id}', [AcceptanceModuleController::class, 'postOpenJobs'])->name('open.jobs');
     Route::group(['prefix' => '', 'as' => 'backend.', 'middleware' => ['auth']], function () {
         Route::get('dahboard', [BackendController::class, 'dashboard'])->name('dashboard');
     
