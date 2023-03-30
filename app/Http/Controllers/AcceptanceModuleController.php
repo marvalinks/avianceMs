@@ -400,7 +400,6 @@ class AcceptanceModuleController extends Controller
     }
     public function postOpenJobs(Request $request, $id)
     {
-        // dd($id);
         $bill = AcceptancePool::where('airWaybill', $id)->first();
 
 
@@ -413,20 +412,23 @@ class AcceptanceModuleController extends Controller
             'aviance_security' => 'required', 'aviance_security_sign' => 'required',
             'aviance_agent' => 'required', 'aviance_agent_sign' => 'required'
         ]);
-        $data['shipper_agent_sign'] = $this->createImageFromBase64($request->shipper_agent_sign, 'av_cg_sig');
-        $data['aviance_security_sign'] = $this->createImageFromBase64($request->aviance_security_sign, 'av_cg_sig');
-        $data['aviance_agent_sign'] = $this->createImageFromBase64($request->aviance_agent_sign, 'av_cg_sig');
+
+        $data['shipper_agent_sign'] = $this->createImageFromBase64('a',$request->shipper_agent_sign, 'av_cg_sig');
+        $data['aviance_security_sign'] = $this->createImageFromBase64('b',$request->aviance_security_sign, 'av_cg_sig');
+        $data['aviance_agent_sign'] = $this->createImageFromBase64('c',$request->aviance_agent_sign, 'av_cg_sig');
         $data['is_signed'] = 1;
+
+        // dd($data);
         $bill->update($data);
 
         $request->session()->flash('alert-success', 'Signature Processed');
         return redirect()->route('pending.jobs');
     }
 
-    public function createImageFromBase64($image_64, $route)
+    public function createImageFromBase64($prix, $image_64, $route)
     {
 
-        $file_name = 'image_'.time().'.png';
+        $file_name = $prix.'_image_'.time().'.png';
         $path = $route.'/'.$file_name;
         @list($type, $image_64) = explode(';', $image_64);
         @list(, $image_64)      = explode(',', $image_64);
