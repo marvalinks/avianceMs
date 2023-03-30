@@ -11,6 +11,7 @@ use Illuminate\Http\Client\Pool;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class AcceptanceModuleController extends Controller
 {
@@ -366,29 +367,76 @@ class AcceptanceModuleController extends Controller
     }
     public function pendingJobs(Request $request)
     {
-        $this->fetchCongifurations();
-        $url = $this->routePath.'/pending-jobs';
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'X-Requested-With' => 'XMLHttpRequest'
-        ])->get($url);
-        $bills = $response->json()['success']['bills']['data'];
-        // dd($bills);
+        // $this->fetchCongifurations();
+        // $url = $this->routePath.'/pending-jobs';
+        // $response = Http::withHeaders([
+        //     'Content-Type' => 'application/json',
+        //     'X-Requested-With' => 'XMLHttpRequest'
+        // ])->get($url);
+        // $bills = $response->json()['success']['bills']['data'];
+        $bills = AcceptancePool::where('is_signed', 0)->latest()->paginate(250);
         return view('jobs.pending-jobs', compact('bills'));
         
     }
     public function openJobs(Request $request, $id)
     {
-        $this->fetchCongifurations();
-        $url = $this->routePath.'/pending-jobs/'.$id;
-        dd($url);
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'X-Requested-With' => 'XMLHttpRequest'
-        ])->get($url);
-        $bills = $response->json()['success']['bills']['data'];
-        // dd($bills);
-        return view('jobs.pending-jobs', compact('bills'));
+        // $this->fetchCongifurations();
+        // $url = $this->routePath.'/open-jobs/'.$id;
+        // $response = Http::withHeaders([
+        //     'Content-Type' => 'application/json',
+        //     'X-Requested-With' => 'XMLHttpRequest'
+        // ])->get($url);
+        // $bill = $response->json()['success']['bill'];
+
+        $bill = AcceptancePool::where('airWaybill', $id)->first();
+
+
+        if(!$bill) {
+            return back();
+        }
         
+        return view('jobs.open-job', compact('bill'));
+        
+    }
+    public function postOpenJobs(Request $request, $id)
+    {
+        // dd($id);
+        $bill = AcceptancePool::where('airWaybill', $id)->first();
+
+
+        if(!$bill) {
+            return back();
+        }
+
+        $data = $request->validate([
+            'shipper_agent' => 'required', 'shipper_agent_sign' => 'required',
+            'aviance_security' => 'required', 'aviance_security_sign' => 'required',
+            'aviance_agent' => 'required', 'aviance_agent_sign' => 'required'
+        ]);
+        $data['shipper_agent_sign'] = $this->createImageFromBase64($request->shipper_agent_sign, 'av_cg_sig');
+        $data['aviance_security_sign'] = $this->createImageFromBase64($request->aviance_security_sign, 'av_cg_sig');
+        $data['aviance_agent_sign'] = $this->createImageFromBase64($request->aviance_agent_sign, 'av_cg_sig');
+        $data['is_signed'] = 0;
+        $bill->update($data);
+
+        $request->session()->flash('alert-success', 'Signature Processed');
+        return route('pending.jobs');
+    }
+
+    public function createImageFromBase64($image_64, $route)
+    {
+
+        $file_name = 'image_'.time().'.png';
+        $path = $route.'/'.$file_name;
+        @list($type, $image_64) = explode(';', $image_64);
+        @list(, $image_64)      = explode(',', $image_64);
+        if($image_64!=""){
+               // storing image in storage/app/public Folder
+                //   Storage::disk('public')->put($route.'/' . $file_name,base64_decode($image_64));
+            $storage = Storage::disk('do')->put($route.'/'.$file_name, base64_decode($image_64), 'public');
+            return $path;
+
+        }
+
     }
 }

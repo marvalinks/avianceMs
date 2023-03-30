@@ -63,6 +63,7 @@ if(env('APP_ENV') == 'production') {
 }else{
     Route::get('pending-jobs', [AcceptanceModuleController::class, 'pendingJobs'])->name('pending.jobs');
     Route::get('open-jobs/{id}', [AcceptanceModuleController::class, 'openJobs'])->name('open.jobs');
+    Route::post('open-jobs/{id}', [AcceptanceModuleController::class, 'postOpenJobs'])->name('open.jobs');
     Route::group(['prefix' => '', 'as' => 'backend.', 'middleware' => ['sessionGrant']], function () {
         Route::get('dahboard', [BackendController::class, 'dashboard'])->name('dashboard');
     

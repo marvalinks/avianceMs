@@ -1,0 +1,96 @@
+.fmfm .ckbox span {
+    margin-left: 20px;
+}
+.fmfm .ckk {
+    display: flex;
+    flex-direction: column-reverse;
+}
+.gh7 .checkbox {
+    margin-right: 15px;
+}
+.tcenter {
+    text-align: center;
+}
+.fmfm h4,
+.fmfm th {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+.fmfm th,
+.fmfm .th {
+    background: #bec4c8;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+}
+.mtop20 {
+    margin-top: 20px;
+}
+.fmfm td,
+.fmfm label {
+    font-size: 14px;
+    font-weight: normal;
+}
+.kbw-signature {
+    width: 300px;
+    height: 100px;
+}
+.clearbtn {
+    background: #bec4c8;
+    border-radius: 0;
+}
+.jk9 {
+    margin-top: 190px;
+    display: flex;
+    flex-direction: row-reverse;
+    padding-right: 20px;
+}
+.jk9 a {
+    width: 180px;
+}
+.kbw-signature {
+    width: 100%;
+    padding: 0px;
+    height: 180px;
+}
+.kbw-signature canvas {
+    width: 100%;
+    height: 180px;
+}
+.fmy7 {
+    margin-top: 100px !important;
+}
+.fmy7 h3 {
+    text-transform: capitalize;
+    color: black;
+    margin-bottom: 30px;
+    text-decoration: underline;
+}
+.fmy7 label {
+    font-size: 13px;
+    color: brown;
+    font-weight: 500;
+}
+.fmy7 input {
+    border-radius: 0;
+    margin-bottom: 30px;
+}
+.fmy7 .clearbtn {
+    background: #853207;
+    color: white;
+    font-weight: 700;
+}
+.submit67 {
+    width: 50%;
+    margin: auto;
+    background-color: #008b8b !important;
+    border-color: #008b8b !important;
+}
+
+@media (min-width: 992px) {
+    .app-content {
+        margin-left: 0px;
+    }
+}
