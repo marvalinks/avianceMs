@@ -416,11 +416,11 @@ class AcceptanceModuleController extends Controller
         $data['shipper_agent_sign'] = $this->createImageFromBase64($request->shipper_agent_sign, 'av_cg_sig');
         $data['aviance_security_sign'] = $this->createImageFromBase64($request->aviance_security_sign, 'av_cg_sig');
         $data['aviance_agent_sign'] = $this->createImageFromBase64($request->aviance_agent_sign, 'av_cg_sig');
-        $data['is_signed'] = 0;
+        $data['is_signed'] = 1;
         $bill->update($data);
 
         $request->session()->flash('alert-success', 'Signature Processed');
-        return route('pending.jobs');
+        return redirect()->route('pending.jobs');
     }
 
     public function createImageFromBase64($image_64, $route)
