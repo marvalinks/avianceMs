@@ -373,8 +373,22 @@ class AcceptanceModuleController extends Controller
             'X-Requested-With' => 'XMLHttpRequest'
         ])->get($url);
         $bills = $response->json()['success']['bills']['data'];
-        dd($bills);
-        return view('jobs.pending-jobs');
+        // dd($bills);
+        return view('jobs.pending-jobs', compact('bills'));
+        
+    }
+    public function openJobs(Request $request, $id)
+    {
+        $this->fetchCongifurations();
+        $url = $this->routePath.'/pending-jobs/'.$id;
+        dd($url);
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'X-Requested-With' => 'XMLHttpRequest'
+        ])->get($url);
+        $bills = $response->json()['success']['bills']['data'];
+        // dd($bills);
+        return view('jobs.pending-jobs', compact('bills'));
         
     }
 }

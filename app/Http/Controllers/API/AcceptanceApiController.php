@@ -83,6 +83,14 @@ class AcceptanceApiController extends Controller
         $success['bills'] =  $bills;
         return response()->json(['success' => $success], $this->successStatus);
     }
+    public function openJobs(Request $request, $id)
+    {
+        $bill = AcceptancePool::where('airWaybill', $id)->first();
+
+        $success['passed'] =  1;
+        $success['bill'] =  $bill;
+        return response()->json(['success' => $success], $this->successStatus);
+    }
     public function acceptanceDetails(Request $request, $id)
     {
         $bill = AcceptancePool::with(['shipper', 'agent', 'security'])->where('airWaybill', $id)->first();

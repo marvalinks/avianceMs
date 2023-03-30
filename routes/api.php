@@ -26,6 +26,7 @@ Route::group(['prefix' => 'v1', 'middleware' => []], function () {
     Route::get('requirements', [AcceptanceApiController::class, 'getRequirements']);
     Route::get('acceptance', [AcceptanceApiController::class, 'index']);
     Route::get('pending-jobs', [AcceptanceApiController::class, 'pendingJobs']);
+    Route::get('open-jobs/{id}', [AcceptanceApiController::class, 'openJobs']);
     Route::post('acceptance-request', [AcceptanceApiController::class, 'acceptanceRequest']);
     
 
