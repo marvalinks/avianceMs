@@ -30,7 +30,7 @@ class AuthenticationController extends Controller
             // dd($email, $request->all());
             if (Auth::attempt(['email' => $email, 'password' => $request->password])) {
                 $request->session()->regenerate();
-                dd('op');
+                dd(auth()->user());
                 return redirect()->route('backend.dashboard');
             }
     
