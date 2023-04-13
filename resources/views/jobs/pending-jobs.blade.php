@@ -23,7 +23,7 @@
                     <div class="col-md-6 col-xl-4">
                         <div class="image-box image-box--shadowed white-bg style-2 mb-4" style="background: #baba92;padding: 15px;">
                             <div class="overlay-container">
-                                <h2>CODE: {{$bill['code']}}</h2>
+                                <h2>AWB: {{$bill['airWaybill']}}</h2>
                                 <hr>
                             </div>
                             <div class="body">

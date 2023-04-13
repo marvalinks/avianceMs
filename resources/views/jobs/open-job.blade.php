@@ -42,8 +42,6 @@
             <div class="col-md-12" style="margin-bottom: 30px;">
                 <h3>Details:</h3>
                 <hr>
-                <h5 class="font-weight-bold my-2"><span>Code: {{$bill['code']}}</span></h5>
-                <hr>
                 <h5 class="font-weight-bold my-2"><span>AWB: {{$bill['airWaybill']}}</span></h5>
                 <hr>
                 <h5 class="font-weight-bold my-2"><span>DEST: {{strtoupper($bill['destination'])}}</span></h5>
