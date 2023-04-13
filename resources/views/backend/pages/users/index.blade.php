@@ -34,8 +34,8 @@
                                 <tr>
                                     <td>{{ $user->staffid ?? 'NO ID' }}</td>
                                     <td>{{ $user->username ?? '' }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->name ?? '' }}</td>
+                                    <td>{{ $user->email ?? '' }}</td>
                                     <td>{{ $user->telephone ?? '-' }}</td>
                                     <td>{{ $user->designation }}</td>
                                     <td>
