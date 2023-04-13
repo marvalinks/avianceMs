@@ -25,7 +25,6 @@
                                 <th scope="col">email</th>
                                 <th scope="col">telephone</th>
                                 <th scope="col">role</th>
-                                <th scope="col">statusCode</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -38,10 +37,6 @@
                                     <td>{{ $user->email ?? '' }}</td>
                                     <td>{{ $user->telephone ?? '-' }}</td>
                                     <td>{{ $user->designation ?? '-' }}</td>
-                                    <td>
-                                        <div class="badge bg-{{ $user->active ? 'success' : 'danger' }}">
-                                            {{ $user->active ? 'online' : 'offline' }}</div>
-                                    </td>
                                     <td>
                                         <a href="{{ route('backend.users.edit', [$user->userid ?? $user->id]) }}">edit user</a>
                                     </td>
