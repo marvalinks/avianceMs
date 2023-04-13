@@ -42,7 +42,7 @@
                             role="button" aria-haspopup="false" aria-expanded="false">
                             <img src="/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
                             <span class="pro-user-name ms-1">
-                                {{ session()->get('user')['name'] ?? auth()->user()->name }} <i class="uil uil-angle-down"></i>
+                                {{ auth()->user()->name ?? '' }} <i class="uil uil-angle-down"></i>
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
@@ -118,22 +118,15 @@
 
                     <div class="collapse navbar-collapse" id="topnav-menu-content">
                         <ul class="navbar-nav">
-                            {{-- <li class="nav-item ">
-                                <a class="nav-link" href="{{ route('backend.dashboard') }}" id="topnav-layout"
-                                    role="button" data-bs-toggle="" aria-haspopup="true" aria-expanded="false">
-                                    <i data-feather="home"></i> Dashboards
-                                </a>
-
-                            </li> --}}
                             <li class="nav-item ">
                                 <a class="nav-link" href="{{ route('backend.acceptance.list') }}"
                                     id="topnav-layout" role="button" data-bs-toggle="" aria-haspopup="true"
                                     aria-expanded="false">
-                                    <i data-feather="home"></i> Acceptance Module
+                                    <i data-feather="home"></i> Acceptance Dashboard
                                 </a>
 
                             </li>
-                            @if (session()->get('user')['roleid'] == 1)
+                            @if (auth()->user()->roleid == 1)
                                 <li class="nav-item ">
                                     <a class="nav-link" href="{{ route('backend.users.list') }}"
                                         id="topnav-layout" role="button" data-bs-toggle="" aria-haspopup="true"

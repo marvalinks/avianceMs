@@ -4,7 +4,7 @@
         <div class="col-md-4">
             <div class="mb-3">
                 <label class="form-label">weight(KG) <span class="span-red">*</span></label>
-                <input required type="text" value="90" readonly name="weight"
+                <input required type="text" value="130" readonly name="weight"
                     class="form-control flatpickr-input" placeholder="weight">
                 {{-- <input required type="text" wire:model="weight" readonly name="weight"
                     class="form-control flatpickr-input" placeholder="weight"> --}}

@@ -46,15 +46,41 @@ class AcceptanceModuleController extends Controller
     public function index(Request $request)
     {
         // $bills = AcceptancePool::latest()->paginate(250);
-        $this->fetchCongifurations();
-        $url = $this->routePath.'/acceptance';
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'X-Requested-With' => 'XMLHttpRequest'
-        ])->get($url);
-        $bills = $response->json()['success']['bills']['data'];
-        // dd($bills);
-        return view('backend.pages.acceptance.index', compact('bills'));
+        if(env('APP_ENV') == 'production'){
+            $awb = $request->awb ?? '';
+            $from_date = $request->from;
+            $to_date = $request->to;
+
+            $bills = AcceptancePool::query();
+
+            if($request->from) {
+                $from = $request->from;
+                $to = $request->to ?? date('Y-m-d');
+                
+                
+                $bills = $bills->whereDate('created_at', '>=', $from)
+                            ->whereDate('created_at', '<=', $to);
+                
+            }
+            if($request->awb) {
+                $bills = $bills->where('airWaybill', $request->awb);
+            }
+
+
+            $bills = $bills->latest()->paginate(250);
+            return view('backend.pages.acceptance.admin-index', compact('bills', 'from_date', 'to_date', 'awb'));
+        }else{
+            $this->fetchCongifurations();
+            $url = $this->routePath.'/acceptance';
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json',
+                'X-Requested-With' => 'XMLHttpRequest'
+            ])->get($url);
+            $bills = $response->json()['success']['bills']['data'];
+            // dd($bills);
+            return view('backend.pages.acceptance.index', compact('bills'));
+        }
+        
     }
     public function show(Request $request, $id)
     {
