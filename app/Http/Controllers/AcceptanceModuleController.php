@@ -437,7 +437,9 @@ class AcceptanceModuleController extends Controller
         $data = $request->validate([
             'shipper_agent' => 'required', 'shipper_agent_sign' => 'required',
             'aviance_security' => 'required', 'aviance_security_sign' => 'required',
-            'aviance_agent' => 'required', 'aviance_agent_sign' => 'required'
+            'aviance_agent' => 'required', 'aviance_agent_sign' => 'required',
+            'aviance_security_no' => 'required',
+            'shipper_agent_no' => 'required', 'aviance_agent_no' => 'required'
         ]);
 
         $data['shipper_agent_sign'] = $this->createImageFromBase64('a',$request->shipper_agent_sign, 'av_cg_sig');

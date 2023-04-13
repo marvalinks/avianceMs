@@ -61,6 +61,10 @@
                         <input type="text" name="shipper_agent" class="form-control" required>
                     </div>
                     <div class="row">
+                        <label for="">Shipper Agent Staff No</label>
+                        <input type="text" name="shipper_agent_no" class="form-control" required>
+                    </div>
+                    <div class="row">
                         <label for="">Shipper Agent Signature</label>
                         <div id="shipperAgentPad"></div>
                         <button id="clear1" class="btn clearbtn">clear</button>
@@ -76,6 +80,10 @@
                         <input type="text" name="aviance_security" class="form-control" required>
                     </div>
                     <div class="row">
+                        <label for="">Aviance Security Staff No</label>
+                        <input type="text" name="aviance_security_no" class="form-control" required>
+                    </div>
+                    <div class="row">
                         <label for="">Aviance Security Signature</label>
                         <div id="avianceSecurityPad"></div>
                         <button id="clear2" class="btn clearbtn">clear</button>
@@ -89,6 +97,10 @@
                     <div class="row">
                         <label for="">Aviance Agent</label>
                         <input type="text" name="aviance_agent" class="form-control" required>
+                    </div>
+                    <div class="row">
+                        <label for="">Aviance Agent Staff No</label>
+                        <input type="text" name="aviance_agent_no" class="form-control" required>
                     </div>
                     <div class="row">
                         <label for="">Aviance Agent Signature</label>
