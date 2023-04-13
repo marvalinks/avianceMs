@@ -32,18 +32,18 @@
                         <tbody>
                             @forelse ($users as $user)
                                 <tr>
-                                    <td>{{ $user['staffid'] ?? 'NO ID' }}</td>
-                                    <td>{{ $user['username'] ?? '' }}</td>
-                                    <td>{{ $user['name'] }}</td>
-                                    <td>{{ $user['email'] }}</td>
-                                    <td>{{ $user['telephone'] ?? '-' }}</td>
-                                    <td>{{ $user['designation'] }}</td>
+                                    <td>{{ $user->staffid ?? 'NO ID' }}</td>
+                                    <td>{{ $user->username ?? '' }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->telephone ?? '-' }}</td>
+                                    <td>{{ $user->designation }}</td>
                                     <td>
-                                        <div class="badge bg-{{ $user['active'] ? 'success' : 'danger' }}">
-                                            {{ $user['active'] ? 'online' : 'offline' }}</div>
+                                        <div class="badge bg-{{ $user->active ? 'success' : 'danger' }}">
+                                            {{ $user->active ? 'online' : 'offline' }}</div>
                                     </td>
                                     <td>
-                                        <a href="{{ route('backend.users.edit', [$user['userid'] ?? $user['id']]) }}">edit user</a>
+                                        <a href="{{ route('backend.users.edit', [$user->userid ?? $user->id]) }}">edit user</a>
                                     </td>
                                 </tr>
                             @empty
