@@ -37,10 +37,6 @@
         <div class="card">
             <div class="card-body">
 
-                <a href="{{ route('backend.acceptance.create') }}" class="btn btn-secondary me-4 mb-2 mb-md-0">
-                    <i class="uil-plus me-1"></i> Create a new acceptance form
-                </a>
-
                 <div class="row">
                     <form action="" method="GET">
                         <div class="row formfm">

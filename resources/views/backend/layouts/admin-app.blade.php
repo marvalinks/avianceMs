@@ -127,14 +127,14 @@
 
                             </li>
                             @if (auth()->user()->roleid == 1)
-                                <li class="nav-item ">
+                                {{-- <li class="nav-item ">
                                     <a class="nav-link" href="{{ route('backend.users.list') }}"
                                         id="topnav-layout" role="button" data-bs-toggle="" aria-haspopup="true"
                                         aria-expanded="false">
                                         <i data-feather="home"></i> Manage Users
                                     </a>
 
-                                </li>
+                                </li> --}}
                                 {{-- <li class="nav-item ">
                                     <a class="nav-link" href="{{ route('backend.signees.list') }}"
                                         id="topnav-layout" role="button" data-bs-toggle="" aria-haspopup="true"

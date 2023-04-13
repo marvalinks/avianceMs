@@ -1,4 +1,4 @@
-@extends('backend.layouts.app')
+@extends('backend.layouts.admin-app')
 
 @section('name')
     Users
