@@ -37,7 +37,7 @@
                                     <td>{{ $user->name ?? '' }}</td>
                                     <td>{{ $user->email ?? '' }}</td>
                                     <td>{{ $user->telephone ?? '-' }}</td>
-                                    <td>{{ $user->designation }}</td>
+                                    <td>{{ $user->designation ?? '-' }}</td>
                                     <td>
                                         <div class="badge bg-{{ $user->active ? 'success' : 'danger' }}">
                                             {{ $user->active ? 'online' : 'offline' }}</div>
