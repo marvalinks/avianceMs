@@ -14,13 +14,14 @@ class UserModuleController extends Controller
 
     public function index(Request $request)
     {
-        $url = $this->routePath.'/users';
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'X-Requested-With' => 'XMLHttpRequest'
-        ])->get($url);
+        // $url = $this->routePath.'/users';
+        // $response = Http::withHeaders([
+        //     'Content-Type' => 'application/json',
+        //     'X-Requested-With' => 'XMLHttpRequest'
+        // ])->get($url);
 
-        $users = $response->json()['success']['users']['data'];
+        // $users = $response->json()['success']['users']['data'];
+        $users = User::latest()->paginate(50);
         return view('backend.pages.users.index', compact('users'));
     }
     public function create(Request $request)
