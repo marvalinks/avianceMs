@@ -282,7 +282,7 @@
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Staff No. :</p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">-</span>
+                    <span class="tdeco">{{$bill->aviance_agent_no ?? '-'}}</span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Date: </p>&nbsp;&nbsp;&nbsp;
@@ -302,7 +302,7 @@
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Staff No.</p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">-</span>
+                    <span class="tdeco">{{$bill->aviance_security_no ?? '-'}}</span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Date</p>&nbsp;&nbsp;&nbsp;
@@ -324,7 +324,7 @@
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Staff No.</p>&nbsp;&nbsp;&nbsp;
-                    <span class="tdeco">-</span>
+                    <span class="tdeco">{{$bill->shipper_agent_no ?? '-'}}</span>
                 </li>
                 <li class="dflex mb15">
                     <p class="gstrong">Date</p>&nbsp;&nbsp;&nbsp;
