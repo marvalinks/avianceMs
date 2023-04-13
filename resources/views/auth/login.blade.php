@@ -17,6 +17,12 @@
     <!-- icons -->
     <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
+    <style>
+        .auth-user-testimonial{
+            display: none;
+        }
+    </style>
+
 </head>
 
 <body class="authentication-bg">
@@ -82,7 +88,8 @@
                                         </div>
 
                                         <div class="mb-3 text-center d-grid">
-                                            <button class="btn btn-primary" type="submit">Log In</button>
+                                            <button class="btn btn-primary" type="submit">Log In</button> <br>
+                                            <a href="{{route('pending.jobs')}}" class="btn btn-warning">Open Pending Jobs</a>
                                         </div>
                                     </form>
 
