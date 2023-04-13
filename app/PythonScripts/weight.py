@@ -11,7 +11,7 @@ def w2():
 
     try:
         serialBout = serial.Serial()
-        serialBout.port = "COM5"
+        serialBout.port = "COM13"
         serialBout.baudrate = 9600
         serialBout.open()
 
